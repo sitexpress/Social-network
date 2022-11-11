@@ -1,38 +1,56 @@
 .App {
-  text-align: center;
+  display: grid;
+  grid-template-areas:
+            "head head"
+            "navigation mainPage"
+            "basement basement";
+  grid-template-columns: 2fr 10fr;
+  padding: 10px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.header {
+  display: grid;
+  grid-template-areas: "logo heading";
+  grid-area: head;
+  background-color: lightcoral;
+  padding: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.header__logo {
+  grid-area: logo;
+  max-width: 100px;
+  cursor: pointer;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.header__heading{
+  grid-area: heading;
 }
 
-.App-link {
-  color: #61dafb;
+
+
+.nav {
+  grid-area: navigation;
+  background-color: lightsalmon;
+  padding: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.mainPage {
+  grid-area: mainPage;
+  background-color: lightblue;
 }
+
+.mainPage__img {
+  width: 100%;
+  max-height: 25rem;
+}
+.mainPage__img img {
+  max-width: 100%;
+  max-height: 25rem;
+}
+
+.footer {
+  grid-area: basement;
+  background-color: lightcoral;
+  padding: 10px;
+}
+
