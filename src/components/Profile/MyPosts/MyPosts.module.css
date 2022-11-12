@@ -1,0 +1,24 @@
+.myposts {
+    display: grid;
+    grid-template-columns: 1fr 11fr;
+    grid-template-areas: "mypost__image mypost__descr";
+
+}
+
+.myposts__image {
+    grid-area: mypost__image
+}
+
+.myposts__image img {
+    display: block;
+    margin: 0 auto;
+    max-width: 90px;
+    /*border-radius: 70px;*/
+    padding: 10px;
+}
+
+.myposts__descr {
+    grid-area: mypost__descr;
+    padding: 10px;
+}
+

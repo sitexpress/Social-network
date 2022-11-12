@@ -1,0 +1,13 @@
+.nav {
+    grid-area: navigation;
+    background-color: lightsalmon;
+    padding: 10px;
+}
+
+.nav ul{
+    list-style-type: none;
+}
+
+.nav li {
+    cursor: pointer;
+}

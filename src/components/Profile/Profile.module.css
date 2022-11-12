@@ -1,0 +1,13 @@
+.mainPage {
+    grid-area: mainPage;
+    background-color: lightblue;
+}
+
+.mainPage__img {
+    width: 100%;
+    max-height: 25rem;
+}
+.mainPage__img img {
+    max-width: 100%;
+    max-height: 25rem;
+}

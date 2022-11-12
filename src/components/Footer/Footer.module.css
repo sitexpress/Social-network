@@ -1,0 +1,5 @@
+.footer {
+    grid-area: basement;
+    background-color: lightcoral;
+    padding: 10px;
+}

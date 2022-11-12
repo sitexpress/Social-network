@@ -1,0 +1,17 @@
+.header {
+    display: grid;
+    grid-template-areas: "logo heading";
+    grid-area: head;
+    background-color: lightcoral;
+    padding: 10px;
+}
+
+.header__logo {
+    grid-area: logo;
+    max-width: 100px;
+    cursor: pointer;
+}
+
+.header__heading{
+    grid-area: heading;
+}

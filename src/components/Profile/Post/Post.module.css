@@ -1,0 +1,19 @@
+.post {
+    display: grid;
+    grid-template-areas: "post__img  post__post";
+    grid-template-columns: 2fr 10fr;
+    padding: 10px;
+}
+
+.post__img {
+    grid-area: post__img
+}
+
+.post__post {
+    grid-area: post__post;
+}
+
+.post__img img{
+    max-width: 70px;
+    border-radius: 70px;
+}
