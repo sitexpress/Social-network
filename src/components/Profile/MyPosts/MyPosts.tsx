@@ -15,8 +15,9 @@ export const MyPosts = () => {
                 <div>Age:</div>
             </div>
             
-            <div>
+            <div className={s.myposts__textsender}>
                 <textarea></textarea>
+                <button></button>
             </div>
         </div>
 

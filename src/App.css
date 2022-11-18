@@ -9,7 +9,10 @@
   padding: 5px;
 }
 
-
+.App__mainPage {
+    grid-area: mainPage;
+    background-color: lightblue;
+}
 
 
 

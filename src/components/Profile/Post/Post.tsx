@@ -6,7 +6,7 @@ type PostType = {
     like: number
 }
 
-export const Post = (props: PostType) => {
+export const Post: React.FC<PostType> = (props) => {
     return  (
         <div className={s.post}>
             <div className={s.post__img}>

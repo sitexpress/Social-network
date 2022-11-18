@@ -1,7 +1,10 @@
 .myposts {
     display: grid;
-    grid-template-columns: 1fr 11fr;
-    grid-template-areas: "mypost__image mypost__descr";
+    grid-template-columns: 2fr 10fr;
+    grid-template-areas:
+                "mypost__image mypost__descr"
+                "mypost__textsender mypost__textsender";
+
 
 }
 
@@ -20,5 +23,32 @@
 .myposts__descr {
     grid-area: mypost__descr;
     padding: 10px;
+}
+.myposts__textsender {
+    grid-area: mypost__textsender;
+    padding-top: 10px;
+    padding-left: 45px;
+}
+.myposts__textsender textarea{
+    min-width: 600px;
+    min-height: 40px;
+    background: #F5F7FB;
+    box-shadow: 0px 5px 20px rgba(29, 33, 38, 0.03), 0px 1px 2px rgba(29, 33, 38, 0.1);
+    border-radius: 20px;
+    overflow: auto;
+    overflow:hidden;
+    resize: none;
+    padding: 12px 24px 11px 24px;
+    border: none;
+}
+
+.myposts__textsender button {
+    width: 120px;
+    height: 40px;
+    margin-left: 44px;
+    background: #0066CC;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
 }
 
