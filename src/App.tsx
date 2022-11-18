@@ -15,7 +15,7 @@ export function App() {
               <Header/>
               <Navbar/>
               <div className="App__mainPage">
-                  <Route path='/dialogs' component={Dialogs}/>
+                  <Route exact path='/dialogs' component={Dialogs}/>
                   <Route path='/profile' component={Profile}/>
               </div>
               {/*<Profile/>*/}

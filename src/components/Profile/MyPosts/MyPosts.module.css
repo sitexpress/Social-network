@@ -1,35 +1,11 @@
 .myposts {
     display: grid;
-    grid-template-columns: 2fr 10fr;
-    grid-template-areas:
-                "mypost__image mypost__descr"
-                "mypost__textsender mypost__textsender";
-
-
-}
-
-.myposts__image {
-    grid-area: mypost__image
-}
-
-.myposts__image img {
-    display: block;
-    margin: 0 auto;
-    max-width: 90px;
-    /*border-radius: 70px;*/
-    padding: 10px;
-}
-
-.myposts__descr {
-    grid-area: mypost__descr;
-    padding: 10px;
-}
-.myposts__textsender {
-    grid-area: mypost__textsender;
+    grid-template-columns: 6fr 6fr;
     padding-top: 10px;
-    padding-left: 45px;
+    padding-left:10px;
 }
 .myposts__textsender textarea{
+    align-self: center;
     min-width: 600px;
     min-height: 40px;
     background: #F5F7FB;
@@ -38,17 +14,23 @@
     overflow: auto;
     overflow:hidden;
     resize: none;
-    padding: 12px 24px 11px 24px;
+    padding: 0px 24px 11px 10px;
     border: none;
 }
-
-.myposts__textsender button {
+.myposts__button {
+    align-self: center;
+}
+.myposts__button button {
     width: 120px;
     height: 40px;
+    color: white;
     margin-left: 44px;
     background: #0066CC;
     border-radius: 20px;
     border: none;
     cursor: pointer;
+}
+.myposts__button button:hover{
+    background: rgba(0, 102, 204, 0.85);
 }
 
