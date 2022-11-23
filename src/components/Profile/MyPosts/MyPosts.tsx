@@ -1,20 +1,25 @@
 import React from "react";
 import s from './MyPosts.module.css'
 import {Post} from "../Post/Post";
+import {v1} from "uuid";
 
 export const MyPosts = () => {
+
+    let postData = [
+        {id: v1(), message: 'Hi', like: 1},
+        {id: v1(), message: 'Hi', like: 2},
+        {id: v1(), message: 'Hi', like: 2},
+        {id: v1(), message: 'Hi', like: 5},
+        {id: v1(), message: 'Hi', like: 4},
+        {id: v1(), message: 'Hi', like: 3},
+        {id: v1(), message: 'Hi', like: 65},
+        {id: v1(), message: 'Hi', like: 0},
+    ]
+
+    let postElements = postData.map(el => <Post id={el.id} message={el.message} like={el.like}/>)
+
     return (
         <div className={s.myposts}>
-            {/*<div className={s.myposts__image}>*/}
-            {/*    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTCXxfjxKYid5L_U9Nfkkd8BHQZPWkvmjJ8w&usqp=CAU" alt=""/>*/}
-            {/*</div>*/}
-
-            {/*<div className={s.myposts__descr}>*/}
-            {/*    <div>Name:</div>*/}
-            {/*    <div>Surname:</div>*/}
-            {/*    <div>Age:</div>*/}
-            {/*</div>*/}
-            
             <div className={s.myposts__textsender}>
                 <textarea></textarea>
             </div>
@@ -22,11 +27,7 @@ export const MyPosts = () => {
                 <button>Send message</button>
             </div>
             <div>
-                <Post message={'Hi'} like={1}/>
-                <Post message={'How are you'} like={4}/>
-                <Post message={'do you?'} like={6}/>
-                <Post message={'Hello'} like={5}/>
-                <Post message={'Hidden'} like={8}/>
+                {postElements}
             </div>
         </div>
 
