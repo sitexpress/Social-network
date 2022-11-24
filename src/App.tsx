@@ -15,8 +15,8 @@ export function App() {
               <Header/>
               <Navbar/>
               <div className="App__mainPage">
-                  <Route exact path='/dialogs' component={Dialogs}/>
-                  <Route path='/profile' component={Profile}/>
+                  <Route exact path='/dialogs' render={() => <Dialogs/>}/>
+                  <Route path='/profile' render={() => <Profile/>}/>
               </div>
               {/*<Profile/>*/}
               <Footer/>

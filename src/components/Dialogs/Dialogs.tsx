@@ -2,28 +2,22 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {NavLink} from "react-router-dom";
 import {v1} from "uuid";
+import {DialogItems} from "./DialogItems/DialogItems";
+import {MessageItems} from "./MessageItems/MessageItems";
 
-type DialogItemType = {
-    name: string
+
+export type DialogDataMainType = Array<DialogDataType>
+
+export type DialogDataType = {
     id: string
+    name: string
 }
 
-type MessageType = {
+export type MessageDataMainType = Array<MessageDataType>
+
+export type MessageDataType = {
+    id: string
     message: string
-}
-
-const DialogItem:React.FC<DialogItemType> = (props) => {
-    return (
-        <NavLink to={`/dialogs/1` + props.id}>
-            <li><a href={`/dialogs/1` + props.id}>{props.name}</a></li>
-        </NavLink>
-    )
-}
-
-const Message:React.FC<MessageType> = (props) => {
-    return (
-        <div>{props.message}</div>
-    )
 }
 
 export const Dialogs = () => {
@@ -47,18 +41,15 @@ export const Dialogs = () => {
 
     ]
 
-    let dialogElements = dialogData.map(el => <DialogItem key={el.id} id={el.id} name={el.name}/>)
-    let messageElements = messageData.map(el => <Message key={el.id} message={el.message}/>)
-
     return (
         <div className={s.dialogs}>
             <div>
                 <ul>
-                    {dialogElements}
+                    <DialogItems dialogData={dialogData}/>
                 </ul>
             </div>
             <div className={s.dialogs__dialog}>
-                {messageElements}
+                <MessageItems messageData={messageData}/>
             </div>
         </div>
     )
