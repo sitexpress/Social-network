@@ -1,6 +1,5 @@
 import React from 'react'
-import {MessageDataMainType} from "../Dialogs";
-
+import {MessageDataMainType} from "../../../index";
 
 type messageDataType = {
     messageData: MessageDataMainType

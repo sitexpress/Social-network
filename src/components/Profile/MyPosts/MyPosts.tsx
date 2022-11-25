@@ -1,39 +1,34 @@
-import React from "react";
+import React, {ChangeEvent, useState} from "react";
 import s from './MyPosts.module.css'
 import {Post} from "../Post/Post";
-import {v1} from "uuid";
-import {postDataMainType} from "../Profile";
+import {PostDataMainType} from "../../../index";
 
-type MyPostType = {
-    postData: postDataMainType
+type PostDataType = {
+    postData: PostDataMainType
 }
 
-export const MyPosts = (props:MyPostType) => {
+export const MyPosts = (props:PostDataType) => {
 
-    // let postData = [
-    //     {id: v1(), message: 'Hi', like: 1},
-    //     {id: v1(), message: 'Hi', like: 2},
-    //     {id: v1(), message: 'Hi', like: 2},
-    //     {id: v1(), message: 'Hi', like: 5},
-    //     {id: v1(), message: 'Hi', like: 4},
-    //     {id: v1(), message: 'Hi', like: 3},
-    //     {id: v1(), message: 'Hi', like: 65},
-    //     {id: v1(), message: 'Hi', like: 0},
-    // ]
+    let[value, setValue] = useState('')
 
-    // let postElements = props.postData.map(el => <Post id={el.id} message={el.message} like={el.like}/>)
+    const addPostHandler = () => {
+        return console.log('clicked')
+    }
+
+    const onChangeValueHandler =(e:ChangeEvent<HTMLTextAreaElement>) => {
+        return console.log(e.currentTarget.value)
+    }
 
     return (
         <div className={s.myposts}>
             <div className={s.myposts__textsender}>
-                <textarea></textarea>
+                <textarea value={value} onChange={onChangeValueHandler}></textarea>
             </div>
             <div className={s.myposts__button}>
-                <button>Send message</button>
+                <button onClick={addPostHandler}>Send message</button>
             </div>
             <div>
                 <Post postData={props.postData}/>
-                {/*{postElements}*/}
             </div>
         </div>
 

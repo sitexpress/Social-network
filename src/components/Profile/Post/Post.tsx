@@ -1,16 +1,16 @@
 import React from "react";
 import s from "./Post.module.css"
-import {postDataMainType} from "../Profile";
+import {PostDataMainType} from "../../../index";
 
-type PostType = {
-    postData: postDataMainType
+type PostDataType = {
+    postData: PostDataMainType
 }
 
-export const Post = (props: PostType) => {
+export const Post = (props: PostDataType) => {
 
     let postElements = props.postData.map(el => {
         return (
-            <div>
+            <div key={el.id} className={s.post}>
                 <div className={s.post__img}>
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4vxCAcfKvaKObEwXcnOHnd6E5-OUedVtN0Q&usqp=CAU" alt=""/>
                 </div>
@@ -23,7 +23,7 @@ export const Post = (props: PostType) => {
     })
 
     return  (
-        <div className={s.post}>
+        <div>
             {postElements}
         </div>
     )
