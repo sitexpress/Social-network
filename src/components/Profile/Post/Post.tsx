@@ -1,12 +1,12 @@
 import React from "react";
 import s from "./Post.module.css"
-import {PostDataMainType} from "../../../index";
+import {PostDataType} from "../../../Redux/state";
 
-type PostDataType = {
-    postData: PostDataMainType
+type PostDataMyType = {
+    postData: PostDataType[]
 }
 
-export const Post = (props: PostDataType) => {
+export const Post = (props: PostDataMyType) => {
 
     let postElements = props.postData.map(el => {
         return (

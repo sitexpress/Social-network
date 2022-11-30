@@ -1,9 +1,10 @@
 import React from 'react'
 import {NavLink} from "react-router-dom";
-import {DialogDataMainType} from "../../../index";
+import {DialogDataType} from "../../../Redux/state";
+
 
 type DialogType = {
-    dialogData: DialogDataMainType
+    dialogData: DialogDataType[]
 }
 
 export const DialogItems = (props:DialogType) => {
@@ -16,12 +17,8 @@ export const DialogItems = (props:DialogType) => {
         )
     })
     return (
-        // <NavLink to={`/dialogs/1` + props.id}>
-        //     <li><a href={`/dialogs/1` + props.id}>{props.name}</a></li>
-        // </NavLink>
-    <div>
-        {dialogElements}
-
-    </div>
+        <div>
+            {dialogElements}
+        </div>
     )
 }

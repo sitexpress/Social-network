@@ -1,8 +1,8 @@
 import React from 'react'
-import {MessageDataMainType} from "../../../index";
+import {MessageDataType} from "../../../Redux/state";
 
 type messageDataType = {
-    messageData: MessageDataMainType
+    messageData: MessageDataType[]
 }
 
 export const MessageItems = (props:messageDataType) => {

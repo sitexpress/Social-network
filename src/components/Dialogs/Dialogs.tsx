@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import {v1} from "uuid";
 import {DialogItems} from "./DialogItems/DialogItems";
 import {MessageItems} from "./MessageItems/MessageItems";
-import {DialogDataMainType, MessageDataMainType} from "../../index";
+import {DialogDataType, MessageDataType} from "../../Redux/state";
 
 
 // export type DialogDataMainType = Array<DialogDataType>
@@ -22,30 +22,11 @@ import {DialogDataMainType, MessageDataMainType} from "../../index";
 // }
 
 type DialogData = {
-    dialogData: DialogDataMainType
-    messageData: MessageDataMainType
+    dialogData: DialogDataType[]
+    messageData: MessageDataType[]
 }
 
 export const Dialogs = (props:DialogData) => {
-
-    // let dialogData = [
-    //     {id: v1(), name:"Alex", },
-    //     {id: v1(), name:"Margo", },
-    //     {id: v1(), name:"Sko", },
-    //     {id: v1(), name:"Mako", },
-    //     {id: v1(), name:"George", },
-    //     {id: v1(), name:"Max", },
-    // ]
-    //
-    // let messageData = [
-    //     {id: v1(), message: 'Hi'},
-    //     {id: v1(), message: 'Hi'},
-    //     {id: v1(), message: 'Hi'},
-    //     {id: v1(), message: 'Hi'},
-    //     {id: v1(), message: 'Hi'},
-    //     {id: v1(), message: 'Hi'},
-    //
-    // ]
 
     return (
         <div className={s.dialogs}>

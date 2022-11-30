@@ -2,12 +2,12 @@ import React from "react";
 import s from './Profile.module.css'
 import {MyPosts} from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {PostDataMainType} from "../../index";
+import {PostDataType} from "../../Redux/state";
 
-type PostDataType = {
-    postData: PostDataMainType
+type PostDataMyType = {
+    postData: PostDataType[]
 }
-export const Profile = (props:PostDataType) => {
+export const Profile = (props:PostDataMyType) => {
     return (
         <div className={s.mainPage}>
             <ProfileInfo/>

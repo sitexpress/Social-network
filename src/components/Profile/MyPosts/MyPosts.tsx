@@ -1,22 +1,26 @@
 import React, {ChangeEvent, useState} from "react";
 import s from './MyPosts.module.css'
 import {Post} from "../Post/Post";
-import {PostDataMainType} from "../../../index";
+import {PostDataType} from "../../../Redux/state";
+import {v1} from "uuid";
 
-type PostDataType = {
-    postData: PostDataMainType
+
+type PostDataMyType = {
+    postData: PostDataType[]
 }
 
-export const MyPosts = (props:PostDataType) => {
+export const MyPosts = (props:PostDataMyType) => {
 
     let[value, setValue] = useState('')
 
     const addPostHandler = () => {
-        return console.log('clicked')
+        props.postData.push({id: v1(), message: value, like: 0})
+        console.log('Done')
+        setValue('')
     }
 
     const onChangeValueHandler =(e:ChangeEvent<HTMLTextAreaElement>) => {
-        return console.log(e.currentTarget.value)
+        setValue(e.currentTarget.value)
     }
 
     return (
