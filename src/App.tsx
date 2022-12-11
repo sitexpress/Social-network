@@ -10,15 +10,15 @@ import {StateType} from "./Redux/state";
 
 type AppPropsType = {state:StateType }
 
-export function App(props:AppPropsType) {
+export function App(props1:AppPropsType) {
   return (
       <BrowserRouter>
           <div className="App">
               <Header/>
               <Navbar/>
               <div className="App__mainPage">
-                  <Route exact path='/dialogs' render={() => <Dialogs dialogData={props.state.dialogsPage.dialogData} messageData={props.state.dialogsPage.messageData}/>}/>
-                  <Route path='/profile' render={() => <Profile postData={props.state.profilePage.postData}/>}/>
+                  <Route exact path='/dialogs' render={() => <Dialogs dialogData={props1.state.dialogsPage.dialogData} messageData={props1.state.dialogsPage.messageData}/>}/>
+                  <Route path='/profile' render={() => <Profile profilePage={props1.state.profilePage}/>}/>
               </div>
               <Footer/>
           </div>

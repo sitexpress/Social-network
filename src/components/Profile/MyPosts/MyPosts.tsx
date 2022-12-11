@@ -1,38 +1,37 @@
 import React, {ChangeEvent, useState} from "react";
 import s from './MyPosts.module.css'
 import {Post} from "../Post/Post";
-import {PostDataType} from "../../../Redux/state";
+import {newPostDataChangeHandler, PostDataType, ProfilePageType, profilePostData} from "../../../Redux/state";
 import {v1} from "uuid";
 
 
 type PostDataMyType = {
-    postData: PostDataType[]
+    profilePage: ProfilePageType
 }
 
 export const MyPosts = (props:PostDataMyType) => {
 
-    let[value, setValue] = useState('')
+    // let[value, setValue] = useState('')
 
     const addPostHandler = () => {
-        props.postData.push({id: v1(), message: value, like: 0})
+        profilePostData(props.profilePage.newPostData)
         console.log('Done')
-        setValue('')
     }
 
     const onChangeValueHandler =(e:ChangeEvent<HTMLTextAreaElement>) => {
-        setValue(e.currentTarget.value)
+        newPostDataChangeHandler(e.currentTarget.value)
     }
 
     return (
         <div className={s.myposts}>
             <div className={s.myposts__textsender}>
-                <textarea value={value} onChange={onChangeValueHandler}></textarea>
+                <textarea value={props.profilePage.newPostData} onChange={onChangeValueHandler}></textarea>
             </div>
             <div className={s.myposts__button}>
                 <button onClick={addPostHandler}>Send message</button>
             </div>
             <div>
-                <Post postData={props.postData}/>
+                <Post postData={props.profilePage.postData}/>
             </div>
         </div>
 

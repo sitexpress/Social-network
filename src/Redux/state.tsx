@@ -1,7 +1,6 @@
 import React from 'react';
 import {v1} from "uuid";
 
-
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: dialogsPageType
@@ -9,6 +8,7 @@ export type StateType = {
 
 export type ProfilePageType = {
     postData: PostDataType[]
+    newPostData: string
 }
 
 export type dialogsPageType = {
@@ -30,6 +30,10 @@ export type MessageDataType = {
     message: string
 }
 
+let AppReRender = (state: StateType) => {
+    console.log('state is changed')
+}
+
 export let state:StateType = {
     profilePage: {
         postData: [
@@ -41,7 +45,8 @@ export let state:StateType = {
             {id: v1(), message: 'cdcdsc', like: 3},
             {id: v1(), message: 'dcad', like: 65},
             {id: v1(), message: 'acad', like: 0},
-        ]
+        ],
+        newPostData: ''
     },
     dialogsPage: {
         dialogData: [
@@ -63,6 +68,25 @@ export let state:StateType = {
         ]
     }
 }
+
+// @ts-ignore
+window.state = state
+
+export const profilePostData = (value:string) => {
+    state.profilePage.postData.unshift({id: v1(), message: value, like: 0})
+    AppReRender(state)
+    state.profilePage.newPostData = ''
+}
+
+export const newPostDataChangeHandler = (value:string) => {
+    state.profilePage.newPostData = value
+    AppReRender(state)
+}
+
+export const subscriber = (observer: (state: StateType) => void) => {
+    AppReRender = observer
+}
+// export default state
 
 
 
