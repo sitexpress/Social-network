@@ -4,26 +4,12 @@ import {NavLink} from "react-router-dom";
 import {v1} from "uuid";
 import {DialogItems} from "./DialogItems/DialogItems";
 import {MessageItems} from "./MessageItems/MessageItems";
-import {DialogDataType, MessageDataType} from "../../Redux/state";
-
-
-// export type DialogDataMainType = Array<DialogDataType>
-//
-// export type DialogDataType = {
-//     id: string
-//     name: string
-// }
-//
-// export type MessageDataMainType = Array<MessageDataType>
-//
-// export type MessageDataType = {
-//     id: string
-//     message: string
-// }
+import {DialogDataType, dialogsPageType, MainActionType, MessageDataType} from "../../Redux/state";
 
 type DialogData = {
     dialogData: DialogDataType[]
-    messageData: MessageDataType[]
+    dialogsPage: dialogsPageType
+    dispatch: (actions: MainActionType) => void
 }
 
 export const Dialogs = (props:DialogData) => {
@@ -35,8 +21,12 @@ export const Dialogs = (props:DialogData) => {
                     <DialogItems dialogData={props.dialogData}/>
                 </ul>
             </div>
-            <div className={s.dialogs__dialog}>
-                <MessageItems messageData={props.messageData}/>
+            <div>
+                <ul>
+                    <MessageItems dialogsPage={props.dialogsPage}
+                                    dispatch={props.dispatch}
+                    />
+                </ul>
             </div>
         </div>
     )

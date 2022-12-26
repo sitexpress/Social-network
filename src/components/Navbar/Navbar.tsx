@@ -6,20 +6,20 @@ export const Navbar = () => {
         <nav className={s.nav}>
             <ul>
                 <li>
-                    <NavLink className={s.nav__link} activeClassName={s.active} to="/profile">Profile</NavLink>
+                    <NavLink className={s.nav__link}  to="/profile">Profile</NavLink>
                 </li>
                 <li>
-                    <NavLink className={s.nav__link} activeClassName={s.active} to="/dialogs">Messages</NavLink>
+                    <NavLink className={s.nav__link}  to="/dialogs">Messages</NavLink>
                 </li>
                 <li>
-                    <NavLink className={s.nav__link} activeClassName={s.active} to="/news">News</NavLink>
+                    <NavLink className={s.nav__link}  to="/news">News</NavLink>
                 </li>
                 <li>
-                    <NavLink className={s.nav__link} activeClassName={s.active} to="/music">Music</NavLink>
+                    <NavLink className={s.nav__link}  to="/music">Music</NavLink>
                 </li>
                 <br/>
                 <li>
-                    <NavLink className={s.nav__link} activeClassName={s.active} to="/settings">Settings</NavLink>
+                    <NavLink className={s.nav__link}  to="/settings">Settings</NavLink>
                 </li>
             </ul>
         </nav>

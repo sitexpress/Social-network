@@ -2,18 +2,25 @@ import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {App} from './App';
-import {state, StateType, subscriber} from './Redux/state'
+import {StateType, store} from "./Redux/state";
+import {BrowserRouter} from "react-router-dom";
 
-let AppReRender = (state:StateType) => {
+export const AppReRender = (state: StateType) => {
     ReactDOM.render(
-        <App state={state}/>,
+        <BrowserRouter>
+            <App
+                state={state}
+                dispatch={store.dispatch.bind(store)}
+                // profilePostData={store.dispatch.bind(store)}
+                // newPostDataChangeHandler={store.newPostDataChangeHandler.bind(store)}
+            />
+        </BrowserRouter>,
         document.getElementById('root')
     )
 }
-AppReRender(state)
 
-subscriber(AppReRender)
-
+store.subscriber(AppReRender)
+AppReRender(store.getState())
 
 
 
