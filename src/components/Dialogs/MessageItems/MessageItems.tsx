@@ -1,24 +1,26 @@
 import React, {ChangeEvent} from 'react'
-import {dialogsPageType, MainActionType} from "../../../Redux/state";
+import {dialogsPageType} from "../../../Redux/messageReducer";
 import {addMessagesAC, newMessageDataAC} from "../../../Redux/messageReducer";
+import {MapConnectMessageType} from "../MessageItemsContainer/MessageItemsContainer";
 
-type messageDataType = {
-    dialogsPage: dialogsPageType
-    dispatch: (action:MainActionType) => void
-}
+// type messagesDataType = {
+//     dialogsPage: dialogsPageType
+//     callBackOnSendMessage: () => void
+//     callBackOnChangeMessage: (value:string) => void
+// }
 
-export const MessageItems = (props:messageDataType) => {
+// type messagesDataType = MapStatePropsType | MapDispatchToPropsType
 
-    // const {dialogsId} = useParams()
-    // const messages = props.messageData.filter(el => el.id === dialogsId)
+export const MessageItems = (props:MapConnectMessageType) => {
 
     const sendMessageHandler = () => {
-        props.dispatch(addMessagesAC(props.dialogsPage.newMessageData))
+        props.callBackOnSendMessage()
     }
 
     const onChangeMessageHandler = (e:ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(newMessageDataAC(e.currentTarget.value))
+        props.callBackOnChangeMessage(e.currentTarget.value)
     }
+
     return (
         <div>
             <div>

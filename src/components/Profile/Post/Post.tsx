@@ -1,6 +1,6 @@
 import React from "react";
 import s from "./Post.module.css"
-import {PostDataType} from "../../../Redux/state";
+import {PostDataType} from "../../../Redux/profileReducer";
 
 type PostDataMyType = {
     postData: PostDataType[]

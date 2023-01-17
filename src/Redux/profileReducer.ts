@@ -1,20 +1,48 @@
 import {v1} from "uuid";
-import {MainActionType, ProfilePageType} from "./state";
 
 const ADD_POST = 'ADD-POST'
 const CHANGE_TEXT = 'CHANGE-TEXT'
 
-export const profileReducer = (state:ProfilePageType, action:MainActionType):ProfilePageType => {
+const initial:ProfilePageType = {
+        postData: [
+            {id: v1(), message: 'Hi', like: 1},
+            {id: v1(), message: 'How', like: 2},
+            {id: v1(), message: 'Are you here?', like: 2},
+            {id: v1(), message: 'Hiddd', like: 5},
+            {id: v1(), message: 'ddd', like: 4},
+            {id: v1(), message: 'cdcdsc', like: 3},
+            {id: v1(), message: 'dcad', like: 65},
+            {id: v1(), message: 'acad', like: 0},
+        ],
+        newPostData: ''
+}
+
+export type PostDataType = {
+    id: string
+    message: string
+    like: number
+}
+
+export type ProfilePageType = {
+    postData: PostDataType[]
+    newPostData: string
+}
+
+export const profileReducer = (state:ProfilePageType = initial, action:MainProfileActionType):ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
             const newPost = {id: v1(), message: action.value, like: 0}
-            return {...state, postData: [...state.postData, newPost]}
+            return {...state, postData: [newPost, ...state.postData], newPostData:''}
         case CHANGE_TEXT:
             return {...state, newPostData: action.value}
         default:
             return state
     }
 }
+
+
+export type MainProfileActionType = addProfilePostACType | newProfilePostDataACType
+
 
 export type addProfilePostACType = ReturnType<typeof addProfilePostAC>
 export const addProfilePostAC = (value: string) => {

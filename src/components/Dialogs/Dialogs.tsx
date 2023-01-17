@@ -1,31 +1,19 @@
 import React from 'react';
 import s from './Dialogs.module.css'
-import {NavLink} from "react-router-dom";
-import {v1} from "uuid";
 import {DialogItems} from "./DialogItems/DialogItems";
-import {MessageItems} from "./MessageItems/MessageItems";
-import {DialogDataType, dialogsPageType, MainActionType, MessageDataType} from "../../Redux/state";
+import {MessageItemsContainer} from "./MessageItemsContainer/MessageItemsContainer";
 
-type DialogData = {
-    dialogData: DialogDataType[]
-    dialogsPage: dialogsPageType
-    dispatch: (actions: MainActionType) => void
-}
-
-export const Dialogs = (props:DialogData) => {
-
+export const Dialogs = () => {
     return (
         <div className={s.dialogs}>
             <div>
                 <ul>
-                    <DialogItems dialogData={props.dialogData}/>
+                    <DialogItems/>
                 </ul>
             </div>
             <div>
                 <ul>
-                    <MessageItems dialogsPage={props.dialogsPage}
-                                    dispatch={props.dispatch}
-                    />
+                    <MessageItemsContainer/>
                 </ul>
             </div>
         </div>

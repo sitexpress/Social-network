@@ -1,25 +1,20 @@
 import React from 'react'
 import {NavLink} from "react-router-dom";
-import {DialogDataType} from "../../../Redux/state";
+import {store} from "../../../Redux/redux-store";
 
-
-type DialogType = {
-    dialogData: DialogDataType[]
-}
-
-export const DialogItems = (props:DialogType) => {
-
-    let dialogElements = props.dialogData.map(el => {
-        return (
-            <NavLink to={`/dialogs/${el.id}`} key={el.id}>
-                <li>{el.name}</li>
-            </NavLink>
-        )
-    })
-
+export const DialogItems = () => {
     return (
-        <div>
-            {dialogElements}
-        </div>
-    )
+            <div>
+                {
+                    store.getState().dialogsPage.dialogData.map(el => {
+                        return (
+                            <NavLink to={`/dialogs/${el.id}`} key={el.id}>
+                                <li>{el.name}</li>
+                            </NavLink>
+                        )
+                    })
+                }
+            </div>
+        )
+
 }
