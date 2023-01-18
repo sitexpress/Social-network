@@ -1,80 +1,66 @@
-import React from 'react';
-import {UsersType} from "../../Redux/usersReducer";
-import {v1} from "uuid";
-
-type UsersThisType = {
-    users: UsersType[]
-    follow: (userId:string) => void
-    unfollow: (userId:string) => void
-    setUsers: (users:UsersType[]) => void
-}
-export const Users = (props:UsersThisType) => {
-    props.users.length === 0 &&
-    props.setUsers([
-        {
-            id: v1(),
-            image: "https://lnsel.com/wp-content/uploads/2018/12/anon-avatar-300x300.png",
-            followed: false,
-            fullName: 'Dmitry',
-            status: "I'm a boss",
-            location:{city:'Minsk', country:'Belarus'}
-        },
-        {
-            id: v1(),
-            image: "https://lnsel.com/wp-content/uploads/2018/12/anon-avatar-300x300.png",
-            followed: true,
-            fullName: 'Sasha',
-            status: "I'm a boss",
-            location:{city:'Moscow', country:'Russia'}},
-        {
-            id: v1(),
-            image: "https://lnsel.com/wp-content/uploads/2018/12/anon-avatar-300x300.png",
-            followed: false,
-            fullName: 'Andrew',
-            status: "I'm a boss",
-            location:{city:'Ukrain', country:'Kiev'}},
-    ])
-
-    return (
-        <div>
-            {props.users.map(el => {
-
-                const followUnfollowHandler = () => el.followed ? props.unfollow(el.id) : props.follow(el.id)
-                return (
-                    <div key={el.id}>
-                        <span>
-                            <div>
-                                <img src={el.image} style={{width:"100px"}} alt="avatar"/>
-                            </div>
-                        </span>
-                        <span>
-                            <div>
-                                {
-                                    el.followed
-                                    ?
-                                    <button onClick={followUnfollowHandler}>Unsubscribe</button>
-                                    :
-                                    <button onClick={followUnfollowHandler}>Subscribe</button>
-                                }
-                            </div>
-                        </span>
-                        <span>
-                           <div>{el.fullName}</div>
-                        </span>
-                        <span>
-                            <div>{el.status}</div>
-                        </span>
-                        <span>
-                            <div>{el.location.country}</div>
-                            <div>{el.location.city}</div>
-                        </span>
-                        <hr/>
-                    </div>
-                )
-            })}
-        </div>
-    );
-};
-
-// {id: v1(), followed: false, fullName: 'Dmitry', status: "I'm a boss", location:{city:'Minsk', country:'Belarus'}},
-
+export const xyz = {}
+// import React from 'react';
+// import {UsersType} from "../../Redux/usersReducer";
+// import {v1} from "uuid";
+// import axios from "axios";
+// import avatarPlug from "../../assets/ava300x300.jpg"
+//
+// type UsersThisType = {
+//     users: UsersType[]
+//     follow: (userId:string) => void
+//     unfollow: (userId:string) => void
+//     setUsers: (users:UsersType[]) => void
+// }
+// export const Users = (props:UsersThisType) => {
+//
+//     let getUsers = () => {
+//         props.users.length === 0 &&
+//         axios.get("https://social-network.samuraijs.com/api/1.0/users").then(resp => {
+//             props.setUsers(resp.data.items)
+//         })
+//     }
+//
+//     return (
+//         <div>
+//             <button onClick={getUsers}>Get users</button>
+//             {props.users.map(el => {
+//
+//                 const followUnfollowHandler = () => el.followed ? props.unfollow(el.id) : props.follow(el.id)
+//                 return (
+//                     <div key={el.id}>
+//                         <span>
+//                             <div>
+//                                 <img src={`${el.photos.small !== null ? el.photos.small : avatarPlug}`} style={{width:"100px"}} alt="avatar"/>
+//                             </div>
+//                         </span>
+//                         <span>
+//                             <div>
+//                                 {
+//                                     el.followed
+//                                     ?
+//                                     <button onClick={followUnfollowHandler}>Unsubscribe</button>
+//                                     :
+//                                     <button onClick={followUnfollowHandler}>Subscribe</button>
+//                                 }
+//                             </div>
+//                         </span>
+//                         <span>
+//                            <div>{el.name}</div>
+//                         </span>
+//                         <span>
+//                             <div>{el.status}</div>
+//                         </span>
+//                         <span>
+//                             <div>{"el.location.country"}</div>
+//                             <div>{"el.location.city"}</div>
+//                         </span>
+//                         <hr/>
+//                     </div>
+//                 )
+//             })}
+//         </div>
+//     );
+// };
+//
+// // {id: v1(), followed: false, fullName: 'Dmitry', status: "I'm a boss", location:{city:'Minsk', country:'Belarus'}},
+//

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Users} from "./Users";
+import {Users} from "./UsersClass";
 import {connect} from "react-redux";
 import { Dispatch } from 'redux';
 import {ReduxStateType} from "../../Redux/redux-store";
