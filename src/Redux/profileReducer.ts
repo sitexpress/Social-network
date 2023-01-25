@@ -1,7 +1,9 @@
 import {v1} from "uuid";
+import {ContactsType, ProfileType} from "../components/Profile/ProfileInfo/ProfileContainer";
 
 const ADD_POST = 'ADD-POST'
 const CHANGE_TEXT = 'CHANGE-TEXT'
+const SET_USER_PROFILE = 'SET-USER-PROFILE'
 
 const initial:ProfilePageType = {
         postData: [
@@ -14,7 +16,19 @@ const initial:ProfilePageType = {
             {id: v1(), message: 'dcad', like: 65},
             {id: v1(), message: 'acad', like: 0},
         ],
-        newPostData: ''
+        newPostData: '',
+        profile: {
+            aboutMe:'',
+            contacts:{} as ContactsType,
+            fullName:'',
+            lookingForAJob: false,
+            lookingForAJobDescription:'',
+            photos:{
+                large:'',
+                small:''
+            },
+            userId:0
+        }
 }
 
 export type PostDataType = {
@@ -26,6 +40,7 @@ export type PostDataType = {
 export type ProfilePageType = {
     postData: PostDataType[]
     newPostData: string
+    profile: ProfileType
 }
 
 export const profileReducer = (state:ProfilePageType = initial, action:MainProfileActionType):ProfilePageType => {
@@ -35,13 +50,18 @@ export const profileReducer = (state:ProfilePageType = initial, action:MainProfi
             return {...state, postData: [newPost, ...state.postData], newPostData:''}
         case CHANGE_TEXT:
             return {...state, newPostData: action.value}
+        case SET_USER_PROFILE:
+            return {...state, profile:action.profile}
         default:
             return state
     }
 }
 
 
-export type MainProfileActionType = addProfilePostACType | newProfilePostDataACType
+export type MainProfileActionType =
+    addProfilePostACType
+    | newProfilePostDataACType
+    | setUserProfileACType
 
 
 export type addProfilePostACType = ReturnType<typeof addProfilePostAC>
@@ -56,4 +76,10 @@ export type newProfilePostDataACType = ReturnType<typeof newProfilePostDataAC>
 export const newProfilePostDataAC = (value: string) => ({
     type: CHANGE_TEXT,
     value: value
+} as const)
+
+export type setUserProfileACType = ReturnType<typeof setUserProfile>
+export const setUserProfile= (profile: ProfileType) => ({
+    type: SET_USER_PROFILE,
+    profile
 } as const)

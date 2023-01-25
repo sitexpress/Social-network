@@ -7,6 +7,7 @@ import {Footer} from "./components/Footer/Footer";
 import {Dialogs} from "./components/Dialogs/Dialogs";
 import {Route, Routes} from "react-router-dom";
 import {UsersContainer} from "./components/Users/UsersContainer";
+import {ProfileContainer} from "./components/Profile/ProfileInfo/ProfileContainer";
 
 export function App() {
     return (
@@ -15,15 +16,9 @@ export function App() {
                     <Navbar/>
                 <div className="App__mainPage">
                 <Routes>
-                    <Route path='/dialogs' element={<Dialogs
-                        />}
-                    />
-
-                    <Route path='/profile' element={<Profile
-                        />}
-                    />
-                    <Route path='/users' element={<UsersContainer/>}
-                    />
+                    <Route path='/dialogs' element={<Dialogs/>}/>
+                    <Route path='/profile/:userId?' element={<ProfileContainer/>}/>
+                    <Route path='/users' element={<UsersContainer/>}/>
                     </Routes>
                 </div>
             <Footer/>

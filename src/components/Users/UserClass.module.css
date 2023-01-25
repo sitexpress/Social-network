@@ -1,0 +1,8 @@
+.pageNumber {
+    cursor: pointer;
+}
+.pageNumber_selected {
+    color: lightcoral;
+    font-weight: bold;
+    cursor: pointer;
+}
