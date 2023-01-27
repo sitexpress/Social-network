@@ -1,20 +1,25 @@
 import React from 'react';
 import s from "./UserClass.module.css";
 import avatarPlug from "../../assets/ava300x300.jpg";
-import {UsersType} from "../../Redux/usersReducer";
+import {setFollowingInProgress, UsersType} from "../../Redux/usersReducer";
 import {NavLink} from "react-router-dom";
+import axios from "axios";
 
 type UsersThisType = {
     users: UsersType[]
     pageSize: number
     setTotalCount: number
     currentPage: number
-    follow: (userId:string) => void
-    unfollow: (userId:string) => void
+    follow: (userId:number) => void
+    unfollow: (userId:number) => void
     onPageChanged:(page:number) => void
+    isFollowingInProgress: Array<number>
+    setFollowingInProgress:(id: number, isFetching:boolean) => void
+
 }
 
 export const Users = (props:UsersThisType) => {
+    console.log(props.isFollowingInProgress)
 
     let pagesCount = Math.ceil(props.setTotalCount / props.pageSize/1000)
     let pages = [];
@@ -33,8 +38,8 @@ export const Users = (props:UsersThisType) => {
             </div>
             {/*<button onClick={this.getUsers}>Get users</button>*/}
             {props.users.map(el => {
-
-                const followUnfollowHandler = () => el.followed ? props.unfollow(el.id) : props.follow(el.id)
+                console.log('users.tsx',typeof el.id)
+                // const followUnfollowHandler = () => el.followed ? props.unfollow(el.id) : props.follow(el.id)
                 return (
                     <div key={el.id}>
                             <span>
@@ -49,9 +54,41 @@ export const Users = (props:UsersThisType) => {
                                     {
                                         el.followed
                                             ?
-                                            <button onClick={followUnfollowHandler}>Unsubscribe</button>
+                                            <button disabled={props.isFollowingInProgress.some(id => id == el.id)} onClick={() => {
+                                                props.setFollowingInProgress(el.id, true)
+                                                axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${el.id}`, {
+                                                    withCredentials:true,
+                                                    headers: {
+                                                        'API-KEY': "63052fc1-39d2-496e-872a-b5f91fbb5674"
+                                                    }
+                                                })
+                                                    .then(resp => {
+                                                        if (resp.data.resultCode == 0) {
+                                                            props.unfollow(el.id)
+                                                            props.setFollowingInProgress(el.id, false)
+                                                        } else {
+                                                            console.log('Something went wrong')
+                                                        }
+                                                    })
+                                            }}>Unsubscribe</button>
                                             :
-                                            <button onClick={followUnfollowHandler}>Subscribe</button>
+                                            <button  disabled={props.isFollowingInProgress.some(id => id == el.id)} onClick={() => {
+                                                props.setFollowingInProgress(el.id, true)
+                                                axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${el.id}`, {}, {
+                                                    withCredentials:true,
+                                                    headers: {
+                                                        'API-KEY': "63052fc1-39d2-496e-872a-b5f91fbb5674"
+                                                    }
+                                                })
+                                                    .then(resp => {
+                                                        if (resp.data.resultCode == 0) {
+                                                            props.follow(el.id)
+                                                            props.setFollowingInProgress(el.id, false)
+                                                        } else {
+                                                            console.log('Something went wrong')
+                                                        }
+                                                })
+                                            }}>Subscribe</button>
                                     }
                                 </div>
                             </span>

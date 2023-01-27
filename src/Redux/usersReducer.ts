@@ -4,7 +4,7 @@ type LocationType = {
 }
 
 export type UsersType = {
-    id: string
+    id: number
     photos: string
     followed: boolean
     name: string
@@ -18,6 +18,7 @@ export type MainInitType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    isFollowingInProgress: Array<number>
 }
 
 const initial: MainInitType = {
@@ -25,7 +26,8 @@ const initial: MainInitType = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: true
+    isFetching: true,
+    isFollowingInProgress: []
 }
 
 export const usersReducer = (state: MainInitType = initial, action: MainUsersActionType): MainInitType => {
@@ -56,6 +58,14 @@ export const usersReducer = (state: MainInitType = initial, action: MainUsersAct
             return {
                 ...state, isFetching: action.isFetching
             }
+        case "TOGGLE-FOLLOWING-IN-PROGRESS":
+            console.log('reducer',typeof action.id)
+            return {
+                ...state,
+                    isFollowingInProgress: action.isFetching
+                        ? [...state.isFollowingInProgress, action.id]
+                        : state.isFollowingInProgress.filter(el => el !== action.id )
+            }
         default:
             return state
     }
@@ -69,14 +79,15 @@ export type MainUsersActionType =
     | setCurrentPageACACType
     | setTotalCountACType
     | setToggleACType
+    | setFollowingInProgressACType
 
 export type followACType = ReturnType<typeof follow>
-export const follow = (userId: string) => {
+export const follow = (userId: number) => {
     return {type: 'FOLLOW', userId} as const
 }
 
 export type unFollowACType = ReturnType<typeof unFollow>
-export const unFollow = (userId: string) => {
+export const unFollow = (userId: number) => {
     return {type: 'UNFOLLOW', userId} as const
 }
 
@@ -98,5 +109,10 @@ export const setTotalCount = (totalCount: number) => {
 export type setToggleACType = ReturnType<typeof setToggle>
 export const setToggle = (isFetching: boolean) => {
     return {type: 'TOGGLE-IS-FETCHING', isFetching} as const
+}
+
+export type setFollowingInProgressACType = ReturnType<typeof setFollowingInProgress>
+export const setFollowingInProgress = (id: number, isFetching:boolean) => {
+    return {type: 'TOGGLE-FOLLOWING-IN-PROGRESS', id, isFetching} as const
 }
 

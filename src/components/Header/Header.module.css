@@ -1,6 +1,6 @@
 .header {
     display: grid;
-    grid-template-areas: "logo heading";
+    grid-template-areas: "logo heading login";
     grid-area: head;
     background-color: lightcoral;
     padding: 10px;
@@ -14,4 +14,21 @@
 
 .header__heading{
     grid-area: heading;
+}
+
+.login {
+    grid-area: login;
+    margin: 0 auto;
+    padding-top: 20px;
+    cursor: pointer;
+}
+
+.login a {
+    color:white;
+    text-decoration: none;
+}
+
+.login a:hover {
+    color:black;
+    text-decoration: none;
 }

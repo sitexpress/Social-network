@@ -48,16 +48,15 @@ export type ProfileType = {
 export class ProfileApiComponent extends React.Component<WithRouterPropsType> {
 
     componentDidMount(){
-
+    // debugger
         let userId = this.props.params.userId
-        // if (!userId) {
-        //     userId = 2
-        // }
+        if (!userId) {
+            userId = 2
+        }
         console.log(this.props)
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
             .then(resp => {
             this.props.setUserProfile(resp.data)
-
         })
     }
     render() {
