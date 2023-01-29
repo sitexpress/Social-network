@@ -1,9 +1,12 @@
-import {combineReducers, createStore} from "redux";
-import {messageReducer} from "./messageReducer";
-import {profileReducer} from "./profileReducer";
-import {usersReducer} from "./usersReducer";
-import {authReducer} from "./authReducer";
+import {applyMiddleware, combineReducers, createStore} from "redux";
+import {MainMessagesActionType, messageReducer} from "./messageReducer";
+import {MainProfileActionType, profileReducer} from "./profileReducer";
+import {MainUsersActionType, usersReducer} from "./usersReducer";
+import {AuthMainType, authReducer} from "./authReducer";
+import thunkMiddleware, {ThunkMiddleware} from "redux-thunk"
 
+// объединяя reducer-ы с помощью combineReducer
+// мы задаём сруктуру нашего единственного объекта-состояния
 
 export const rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -12,8 +15,16 @@ export const rootReducer = combineReducers({
     auth: authReducer
 })
 
+// непосредственно создаём store
+export let store = createStore(rootReducer, applyMiddleware(thunkMiddleware as ThunkMiddleware))
+
+// определяем автоматически тип всего объекта состояния
 export type ReduxStateType = ReturnType<typeof rootReducer>
-export let store = createStore(rootReducer)
+
+export type AppDispatch = typeof store.dispatch;
+
+// все типы экшенов для всего app если нужно
+export type AppActionType = MainProfileActionType | MainUsersActionType | AuthMainType | MainMessagesActionType
 
 //@ts-ignore
 window.store = store

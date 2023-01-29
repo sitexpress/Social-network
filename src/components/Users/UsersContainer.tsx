@@ -2,17 +2,13 @@ import React from 'react';
 import {connect} from "react-redux";
 import {ReduxStateType} from "../../Redux/redux-store";
 import {
-    follow,
-    setCurrentPage, setFollowingInProgress, setToggle,
-    setTotalCount,
-    setUsers,
-    unFollow,
+    follow, followThunkCreator, getUsersThunkCreator, onPageChangeThunkCreator,
+    setCurrentPage, setFollowingInProgress,
+    unFollow, unfollowThunkCreator,
     UsersType
 } from "../../Redux/usersReducer";
-import axios from "axios";
 import {Users} from "./Users";
 import {Preloader} from "../../common/preloader/Preloader";
-import {usersAPI} from "../../api/api";
 
 //-------------------------------------------UserContainerAPI---------------------------
 export type UsersThisType = {
@@ -22,37 +18,25 @@ export type UsersThisType = {
     currentPage: number
     follow: (userId: number) => void
     unFollow: (userId: number) => void
-    setUsers: (users: UsersType[]) => void
     setCurrentPage: (pageNumber: number) => void
-    setTotalCount: (totalCount: number) => void
     isFetching: boolean
-    setToggle: (isFetching: boolean) => void
-    isFollowingInProgress:Array<number>
-    setFollowingInProgress: (id: number, isFetching:boolean) => void
-
+    isFollowingInProgress: Array<number>
+    setFollowingInProgress: (id: number, isFetching: boolean) => void
+    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
+    onPageChangeThunkCreator: (p: number, pageSize: number) => void
+    followThunkCreator: (userId: number) => void
+    unfollowThunkCreator: (userId: number) => void
 }
+
 
 export class UsersAPIComponent extends React.Component<UsersThisType> {
 
     componentDidMount() {
-        this.props.setToggle(true)
-
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-
-            this.props.setToggle(false)
-            this.props.setUsers(data.items)
-            this.props.setTotalCount(data.totalCount)
-        })
+        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (p: number) => {
-        this.props.setCurrentPage(p)
-        this.props.setToggle(true)
-
-        usersAPI.getUsers(p, this.props.pageSize).then(data => {
-            this.props.setToggle(false)
-            this.props.setUsers(data.items)
-        })
+        this.props.onPageChangeThunkCreator(p, this.props.pageSize)
     }
 
     render() {
@@ -67,6 +51,8 @@ export class UsersAPIComponent extends React.Component<UsersThisType> {
                    onPageChanged={this.onPageChanged}
                    isFollowingInProgress={this.props.isFollowingInProgress}
                    setFollowingInProgress={this.props.setFollowingInProgress}
+                   followThunkCreator={this.props.followThunkCreator}
+                   unfollowThunkCreator={this.props.unfollowThunkCreator}
 
             />
         </>
@@ -94,37 +80,16 @@ const mapStateToProps = (state: ReduxStateType): MapStatePropsType => {
     }
 }
 
-// const mapDispatchToProps = (dispatch:Dispatch) => {
-//     return {
-//         follow: (userId:string) => {
-//             dispatch(followAC(userId))
-//         },
-//         unfollow: (userId:string) => {
-//             dispatch(unFollowAC(userId))
-//         },
-//         setUsers: (users:UsersType[]) => {
-//             dispatch(setUsersAC(users))
-//         },
-//         setCurrentPage: (pageNumber:number) => {
-//             dispatch(setCurrentPageAC(pageNumber))
-//         },
-//         setTotalUsersCount: (totalCount:number) => {
-//             dispatch(setTotalCountAC(totalCount))
-//         },
-//         toggleIsFetching: (isFetching:boolean) => {
-//             dispatch(setToggleAC(isFetching))
-//         }
-//     }
-// }
-
 export const UsersContainer = connect(mapStateToProps, {
         follow,
         unFollow,
-        setUsers,
         setCurrentPage,
-        setTotalCount,
-        setToggle,
         setFollowingInProgress,
+
+        getUsersThunkCreator,
+        onPageChangeThunkCreator,
+        followThunkCreator,
+        unfollowThunkCreator
     }
 )(UsersAPIComponent)
 

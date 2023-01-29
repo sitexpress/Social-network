@@ -1,3 +1,6 @@
+import {usersAPI} from "../api/api";
+import {Dispatch} from "redux";
+
 type LocationType = {
     city: string
     country: string
@@ -115,4 +118,62 @@ export type setFollowingInProgressACType = ReturnType<typeof setFollowingInProgr
 export const setFollowingInProgress = (id: number, isFetching:boolean) => {
     return {type: 'TOGGLE-FOLLOWING-IN-PROGRESS', id, isFetching} as const
 }
+
+
+export const getUsersThunkCreator = (currentPage:number, pageSize:number) => {
+    return (dispatch:Dispatch) => {
+        dispatch(setToggle(true))
+
+        usersAPI.getUsers(currentPage, pageSize).then(data => {
+
+            dispatch(setToggle(false))
+            dispatch(setUsers(data.items))
+            dispatch(setTotalCount(data.totalCount))
+        })
+    }
+}
+
+export const onPageChangeThunkCreator = (p:number, pageSize:number) => {
+    return (dispatch:Dispatch) => {
+        dispatch(setCurrentPage(p))
+        dispatch(setToggle(true))
+
+        usersAPI.getUsers(p, pageSize).then(data => {
+            dispatch(setToggle(false))
+            dispatch(setUsers(data.items))
+        })
+    }
+}
+
+export const unfollowThunkCreator = (userId:number) => {
+    return (dispatch:Dispatch) => {
+        dispatch(setFollowingInProgress(userId, true))
+        usersAPI.acceptUnfollow(userId)
+            .then(resp => {
+                if (resp.data.resultCode == 0) {
+                    dispatch(unFollow(userId))
+                    dispatch(setFollowingInProgress(userId, false))
+                } else {
+                    console.log('Something went wrong')
+                }
+            })
+    }
+}
+
+export const followThunkCreator = (userId:number) => {
+    return (dispatch:Dispatch) => {
+        dispatch(setFollowingInProgress(userId, true))
+        usersAPI.acceptFollow(userId)
+            .then(resp => {
+                if (resp.data.resultCode == 0) {
+                    dispatch(follow(userId))
+                    dispatch(setFollowingInProgress(userId, false))
+                } else {
+                    console.log('Something went wrong')
+                }
+            })
+    }
+}
+
+
 

@@ -4,30 +4,33 @@ import {addMessagesAC, dialogsPageType, newMessageDataAC} from "../../../Redux/m
 import {ReduxStateType} from "../../../Redux/redux-store";
 import {connect} from "react-redux";
 import {compose, Dispatch} from "redux";
+import {AuthType} from "../../../Redux/authReducer";
 
 type MapStatePropsType = {
-    dialogsPage:dialogsPageType,
+    dialogsPage: dialogsPageType
+    isAuth: boolean
 }
 type MapDispatchToPropsType = {
     callBackOnSendMessage: () => void
-    callBackOnChangeMessage: (value:string) => void
+    callBackOnChangeMessage: (value: string) => void
 }
 export type MapConnectMessageType = MapStatePropsType & MapDispatchToPropsType
 
 
-const mapStateToProps = (state:ReduxStateType):MapStatePropsType => {
+const mapStateToProps = (state: ReduxStateType): MapStatePropsType => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
     }
 }
 
-const mapDispatchToProps = (dispatch:Dispatch):MapDispatchToPropsType => {
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
         callBackOnSendMessage: () => {
             const action = addMessagesAC()
             dispatch(action)
         },
-        callBackOnChangeMessage: (value:string) => {
+        callBackOnChangeMessage: (value: string) => {
             const action = newMessageDataAC(value)
             dispatch(action)
         }

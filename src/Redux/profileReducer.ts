@@ -1,5 +1,7 @@
 import {v1} from "uuid";
-import {ContactsType, ProfileType} from "../components/Profile/ProfileInfo/ProfileContainer";
+import {ContactsType, ProfileType} from "../components/Profile/ProfileInfoContainer/ProfileContainer";
+import {Dispatch} from "redux";
+import {authAPI, usersAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST'
 const CHANGE_TEXT = 'CHANGE-TEXT'
@@ -51,6 +53,7 @@ export const profileReducer = (state:ProfilePageType = initial, action:MainProfi
         case CHANGE_TEXT:
             return {...state, newPostData: action.value}
         case SET_USER_PROFILE:
+            console.log('from reducer ',action.profile)
             return {...state, profile:action.profile}
         default:
             return state
@@ -83,3 +86,16 @@ export const setUserProfile= (profile: ProfileType) => ({
     type: SET_USER_PROFILE,
     profile
 } as const)
+
+
+
+export const getProfileThunkCreator = (userId:number) => {
+    return (dispatch:Dispatch<MainProfileActionType>) => {
+        usersAPI.getProfile(userId)
+            .then(resp => {
+                console.log('from thunk ', resp.data)
+            dispatch(setUserProfile(resp.data))
+        })
+    }
+}
+

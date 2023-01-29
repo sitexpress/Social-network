@@ -14,9 +14,20 @@ export const usersAPI = {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(res => (res.data))
     },
-    getUsers2: (currentPage:number = 1, pageSize:number = 10) => {
-        return instance.get(`follow?page=${currentPage}&count=${pageSize}`)
-            .then(res => (res.data))
+    acceptFollow: (userId:number) => {
+        return instance.post(`follow/${userId}`)
+    },
+    acceptUnfollow: (userId:number) => {
+        return instance.delete(`follow/${userId}`)
+    },
+    getProfile: (userId:number) => {
+        return instance.get(`profile/${userId}`)
     }
 }
 
+export const authAPI = {
+    me: () => {
+        return instance.get(`auth/me`)
+    },
+
+}

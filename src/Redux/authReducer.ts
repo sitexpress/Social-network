@@ -1,6 +1,8 @@
+import {Dispatch} from "redux";
+import {authAPI} from "../api/api";
 
 
-type AuthType = {
+export type AuthType = {
     id: string
     email: string
     login: string
@@ -15,7 +17,7 @@ const initialState = {
 }
 
 
-export const authReducer = (state:AuthType = initialState, action:setAuthUserDataACType):AuthType => {
+export const authReducer = (state:AuthType = initialState, action:AuthMainType):AuthType => {
     switch (action.type) {
         case 'SET_USER_DATA':
             return {
@@ -28,6 +30,7 @@ export const authReducer = (state:AuthType = initialState, action:setAuthUserDat
     }
 }
 
+export type AuthMainType = setAuthUserDataACType
 
 export type setAuthUserDataACType = ReturnType<typeof setAuthUserDataAC>
 export const setAuthUserDataAC = (id:string, email:string, login:string) => {
@@ -35,4 +38,16 @@ export const setAuthUserDataAC = (id:string, email:string, login:string) => {
         type: 'SET_USER_DATA',
         data: {id, email, login}
     } as const
+}
+
+
+export const getLoginMeThunkCreator = () => {
+    return (dispatch:Dispatch<AuthMainType>) => {
+        authAPI.me().then(resp => {
+            if (resp.data.resultCode === 0) {
+                let {id, email, login} = resp.data.data
+                dispatch(setAuthUserDataAC(id, email, login))
+            }
+        })
+    }
 }

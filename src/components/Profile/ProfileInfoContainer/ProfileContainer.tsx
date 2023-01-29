@@ -1,22 +1,10 @@
 import React from 'react';
-import axios from "axios";
 import {connect} from "react-redux";
-import {ReduxStateType} from "../../../Redux/redux-store";
-import {ProfilePageType, setUserProfile} from "../../../Redux/profileReducer";
+import {AppDispatch, ReduxStateType} from "../../../Redux/redux-store";
+import {getProfileThunkCreator, setUserProfile} from "../../../Redux/profileReducer";
 import {Profile} from "../Profile";
-import {Dispatch} from "redux";
-// import {RouteComponentProps, withRouter} from "react-router-dom";
-
-import {
-    useLocation,
-    useNavigate,
-    useParams,
-    useSearchParams,
-} from 'react-router-dom';
-import {Location} from "@remix-run/router";
-import {NavigateFunction} from "react-router/dist/lib/hooks";
 import {withRouter} from "../../../common/withRouter/withRouter";
-
+import {Navigate} from "react-router-dom";
 
 export type ContactsType = {
     facebook: string | null
@@ -42,61 +30,60 @@ export type ProfileType = {
     fullName: string
     userId: number
     photos: PhotosType
-
 }
+
+export type TheAuth = boolean
 
 export class ProfileApiComponent extends React.Component<WithRouterPropsType> {
 
     componentDidMount(){
-    // debugger
         let userId = this.props.params.userId
         if (!userId) {
-            userId = 2
+            userId = 15723
         }
-        console.log(this.props)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-            .then(resp => {
-            this.props.setUserProfile(resp.data)
-        })
+
+        this.props.getProfile(userId)
     }
     render() {
-        return (
-            <Profile
-                {...this.props}
-                profile={this.props.profile}
-                />
-        )
+        return !this.props.isAuth
+            ?
+            <Navigate to={"/login"}/>
+            :
+            <Profile {...this.props} profile={this.props.profile}/>
     }
-};
-
-
-
+}
 
 type MapStateToPropsType = {
     profile: ProfileType
+    isAuth: boolean
 }
+
 type MapDispatchToPropsType = {
     setUserProfile:(profile: ProfileType) => void
+    getProfile: (userId:number) => void
 }
 export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 
 let mapStateToProps = (state:ReduxStateType):MapStateToPropsType => ({
-    profile: state.profilePage.profile
+    profile: state.profilePage.profile,
+    isAuth: state.auth.isAuth
 })
-let mapDispatchToProps = (dispatch:Dispatch):MapDispatchToPropsType => ({
+let mapDispatchToProps = (dispatch:AppDispatch):MapDispatchToPropsType => ({
     setUserProfile: (profile: ProfileType) => {
         dispatch(setUserProfile(profile))
+    },
+    getProfile: (userId:number) => {
+        dispatch(getProfileThunkCreator(userId))
     }
+
 })
-
-
 
 type PathParamsType = {
     params: {
         userId:number
     }
 }
-type WithRouterPropsType = ProfilePropsType & PathParamsType
-let WithUrlDataContainerComponent = withRouter(ProfileApiComponent)
+type WithRouterPropsType = ProfilePropsType & PathParamsType & TheAuth
+const WithUrlDataContainerComponent = withRouter(ProfileApiComponent)
 export const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(WithUrlDataContainerComponent)
 

@@ -2,14 +2,8 @@ import React, {ChangeEvent} from 'react'
 import {dialogsPageType} from "../../../Redux/messageReducer";
 import {addMessagesAC, newMessageDataAC} from "../../../Redux/messageReducer";
 import {MapConnectMessageType} from "../MessageItemsContainer/MessageItemsContainer";
+import {Navigate} from "react-router-dom";
 
-// type messagesDataType = {
-//     dialogsPage: dialogsPageType
-//     callBackOnSendMessage: () => void
-//     callBackOnChangeMessage: (value:string) => void
-// }
-
-// type messagesDataType = MapStatePropsType | MapDispatchToPropsType
 
 export const MessageItems = (props:MapConnectMessageType) => {
 
@@ -21,7 +15,10 @@ export const MessageItems = (props:MapConnectMessageType) => {
         props.callBackOnChangeMessage(e.currentTarget.value)
     }
 
-    return (
+    return !props.isAuth
+        ?
+        <Navigate to={"/login"}/>
+        :
         <div>
             <div>
                 <textarea value={props.dialogsPage.newMessageData} onChange={onChangeMessageHandler}></textarea>
@@ -31,6 +28,4 @@ export const MessageItems = (props:MapConnectMessageType) => {
                 {props.dialogsPage.messageData.map(el => <div key={el.id}>{el.message}</div>)}
             </div>
         </div>
-
-    )
 }
