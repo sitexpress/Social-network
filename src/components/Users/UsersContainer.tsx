@@ -9,6 +9,8 @@ import {
 } from "../../Redux/usersReducer";
 import {Users} from "./Users";
 import {Preloader} from "../../common/preloader/Preloader";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
+import {withRouter} from "../../common/withRouter/withRouter";
 
 //-------------------------------------------UserContainerAPI---------------------------
 export type UsersThisType = {
@@ -80,16 +82,19 @@ const mapStateToProps = (state: ReduxStateType): MapStatePropsType => {
     }
 }
 
+let WithRedirect = WithAuthRedirect(UsersAPIComponent)
+const WithUrlDataContainerComponent = withRouter(WithRedirect)
+
 export const UsersContainer = connect(mapStateToProps, {
         follow,
         unFollow,
         setCurrentPage,
         setFollowingInProgress,
-
         getUsersThunkCreator,
         onPageChangeThunkCreator,
         followThunkCreator,
         unfollowThunkCreator
     }
-)(UsersAPIComponent)
+)(WithUrlDataContainerComponent)
+
 

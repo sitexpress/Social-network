@@ -1,8 +1,5 @@
 import React, {ComponentType} from 'react';
 import { Navigate } from 'react-router-dom';
-
-import {MessageItems} from "../components/Dialogs/MessageItems/MessageItems";
-import {MapConnectMessageType} from "../components/Dialogs/MessageItemsContainer/MessageItemsContainer";
 import {connect} from "react-redux";
 import {ReduxStateType} from "../Redux/redux-store";
 
