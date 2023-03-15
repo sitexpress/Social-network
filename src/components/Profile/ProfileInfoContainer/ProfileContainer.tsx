@@ -4,7 +4,7 @@ import {AppDispatch, ReduxStateType} from "../../../Redux/redux-store";
 import {getProfileThunkCreator, setUserProfile} from "../../../Redux/profileReducer";
 import {Profile} from "../Profile";
 import {withRouter} from "../../../common/withRouter/withRouter";
-import {Navigate} from "react-router-dom";
+import {WithAuthRedirect} from "../../../hoc/withAuthRedirect";
 
 export type ContactsType = {
     facebook: string | null
@@ -45,29 +45,28 @@ export class ProfileApiComponent extends React.Component<WithRouterPropsType> {
         this.props.getProfile(userId)
     }
     render() {
-        return !this.props.isAuth
-            ?
-            <Navigate to={"/login"}/>
-            :
-            <Profile {...this.props} profile={this.props.profile}/>
+        return  <Profile {...this.props} profile={this.props.profile}/>
     }
 }
 
 type MapStateToPropsType = {
     profile: ProfileType
-    isAuth: boolean
 }
 
 type MapDispatchToPropsType = {
     setUserProfile:(profile: ProfileType) => void
     getProfile: (userId:number) => void
 }
+
+
+let AuthRedirectComponent = WithAuthRedirect(ProfileApiComponent)
+
 export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 
 let mapStateToProps = (state:ReduxStateType):MapStateToPropsType => ({
     profile: state.profilePage.profile,
-    isAuth: state.auth.isAuth
 })
+
 let mapDispatchToProps = (dispatch:AppDispatch):MapDispatchToPropsType => ({
     setUserProfile: (profile: ProfileType) => {
         dispatch(setUserProfile(profile))
@@ -84,6 +83,6 @@ type PathParamsType = {
     }
 }
 type WithRouterPropsType = ProfilePropsType & PathParamsType & TheAuth
-const WithUrlDataContainerComponent = withRouter(ProfileApiComponent)
+const WithUrlDataContainerComponent = withRouter(AuthRedirectComponent)
 export const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(WithUrlDataContainerComponent)
 
