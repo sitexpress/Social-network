@@ -4,9 +4,6 @@ import {addMessagesAC, dialogsPageType, newMessageDataAC} from "../../../Redux/m
 import {ReduxStateType} from "../../../Redux/redux-store";
 import {connect} from "react-redux";
 import {compose, Dispatch} from "redux";
-import {AuthType} from "../../../Redux/authReducer";
-import {Navigate} from "react-router-dom";
-import {ProfileApiComponent} from "../../Profile/ProfileInfoContainer/ProfileContainer";
 import {WithAuthRedirect} from "../../../hoc/withAuthRedirect";
 
 type MapStatePropsType = {
@@ -18,10 +15,6 @@ type MapDispatchToPropsType = {
     callBackOnChangeMessage: (value: string) => void
 }
 
-
-
-
-const AuthRedirectComponent =  WithAuthRedirect(MessageItems)
 
 export type MapConnectMessageType = MapStatePropsType & MapDispatchToPropsType
 const mapStateToProps = (state: ReduxStateType): MapStatePropsType => {
@@ -44,5 +37,11 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     }
 }
 
+compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    WithAuthRedirect
+)(MessageItems)
+
+const AuthRedirectComponent =  WithAuthRedirect(MessageItems)
 export const MessageItemsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)
 

@@ -83,6 +83,6 @@ type PathParamsType = {
     }
 }
 type WithRouterPropsType = ProfilePropsType & PathParamsType & TheAuth
-const WithUrlDataContainerComponent = withRouter(AuthRedirectComponent)
-export const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(WithUrlDataContainerComponent)
+// const WithUrlDataContainerComponent = withRouter(AuthRedirectComponent)
+export const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)
 

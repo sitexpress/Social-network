@@ -1,8 +1,5 @@
 import React, {ChangeEvent} from 'react'
-import {dialogsPageType} from "../../../Redux/messageReducer";
-import {addMessagesAC, newMessageDataAC} from "../../../Redux/messageReducer";
 import {MapConnectMessageType} from "../MessageItemsContainer/MessageItemsContainer";
-import {Navigate} from "react-router-dom";
 
 
 export const MessageItems = (props:MapConnectMessageType) => {

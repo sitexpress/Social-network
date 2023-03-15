@@ -83,8 +83,6 @@ const mapStateToProps = (state: ReduxStateType): MapStatePropsType => {
 }
 
 let WithRedirect = WithAuthRedirect(UsersAPIComponent)
-const WithUrlDataContainerComponent = withRouter(WithRedirect)
-
 export const UsersContainer = connect(mapStateToProps, {
         follow,
         unFollow,
@@ -95,6 +93,6 @@ export const UsersContainer = connect(mapStateToProps, {
         followThunkCreator,
         unfollowThunkCreator
     }
-)(WithUrlDataContainerComponent)
+)(WithRedirect)
 
 
