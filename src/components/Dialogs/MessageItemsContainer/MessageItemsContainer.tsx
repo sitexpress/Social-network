@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {Component, FC} from 'react';
 import {MessageItems} from "../MessageItems/MessageItems";
 import {addMessagesAC, dialogsPageType, newMessageDataAC} from "../../../Redux/messageReducer";
 import {ReduxStateType} from "../../../Redux/redux-store";
 import {connect} from "react-redux";
 import {compose, Dispatch} from "redux";
 import {WithAuthRedirect} from "../../../hoc/withAuthRedirect";
+import {withRouter} from "../../../common/withRouter/withRouter";
 
 type MapStatePropsType = {
     dialogsPage: dialogsPageType
@@ -37,11 +38,17 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     }
 }
 
-compose(
-    connect(mapStateToProps, mapDispatchToProps),
-    WithAuthRedirect
-)(MessageItems)
+// compose(
+//     connect(mapStateToProps, mapDispatchToProps),
+//     WithAuthRedirect
+// )(MessageItems)
 
-const AuthRedirectComponent =  WithAuthRedirect(MessageItems)
-export const MessageItemsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)
+// const AuthRedirectComponent =  WithAuthRedirect(MessageItems)
+// const WithUrlDataContainerComponent = withRouter(AuthRedirectComponent)
+// export const MessageItemsContainer = connect(mapStateToProps, mapDispatchToProps)(WithUrlDataContainerComponent)
+export const MessageItemsContainer = compose<FC>(
+    connect(mapStateToProps, mapDispatchToProps),
+    WithAuthRedirect,
+    withRouter
+)(MessageItems)
 

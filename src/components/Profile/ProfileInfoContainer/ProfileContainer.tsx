@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {connect} from "react-redux";
 import {AppDispatch, ReduxStateType} from "../../../Redux/redux-store";
 import {getProfileThunkCreator, setUserProfile} from "../../../Redux/profileReducer";
 import {Profile} from "../Profile";
 import {withRouter} from "../../../common/withRouter/withRouter";
 import {WithAuthRedirect} from "../../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 export type ContactsType = {
     facebook: string | null
@@ -59,7 +60,6 @@ type MapDispatchToPropsType = {
 }
 
 
-let AuthRedirectComponent = WithAuthRedirect(ProfileApiComponent)
 
 export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -83,6 +83,14 @@ type PathParamsType = {
     }
 }
 type WithRouterPropsType = ProfilePropsType & PathParamsType & TheAuth
+// let AuthRedirectComponent = WithAuthRedirect(ProfileApiComponent)
 // const WithUrlDataContainerComponent = withRouter(AuthRedirectComponent)
-export const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)
+// export const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(WithUrlDataContainerComponent)
+
+
+export const ProfileContainer = compose<FC>(
+    connect(mapStateToProps, mapDispatchToProps),
+    WithAuthRedirect,
+    withRouter
+)(ProfileApiComponent)
 

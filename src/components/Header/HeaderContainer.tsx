@@ -1,9 +1,11 @@
-import React from "react";
+import React, {FC} from "react";
 import {Header} from "./Header";
 import {connect} from "react-redux";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
 import {AppActionType, AppDispatch, ReduxStateType} from "../../Redux/redux-store";
 import {getLoginMeThunkCreator, setAuthUserDataACType} from "../../Redux/authReducer";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
+import {withRouter} from "../../common/withRouter/withRouter";
 
 type AuthType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -44,6 +46,13 @@ const mapDispatchToProps = (dispatch: AppDispatch):MapDispatchToPropsType => ({
     }
 })
 
-const HeaderContainer =  connect(mapStateToProps, mapDispatchToProps)(HeaderComp)
+// const HeaderContainer =  connect(mapStateToProps, mapDispatchToProps)(HeaderComp)
+// export default HeaderContainer
 
-export default HeaderContainer
+
+export const HeaderContainer =  compose<FC>(
+    connect(mapStateToProps, mapDispatchToProps),
+    WithAuthRedirect,
+    withRouter
+) (HeaderComp)
+

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {connect} from "react-redux";
 import {ReduxStateType} from "../../Redux/redux-store";
 import {
@@ -11,6 +11,7 @@ import {Users} from "./Users";
 import {Preloader} from "../../common/preloader/Preloader";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 import {withRouter} from "../../common/withRouter/withRouter";
+import {compose} from "redux";
 
 //-------------------------------------------UserContainerAPI---------------------------
 export type UsersThisType = {
@@ -82,8 +83,24 @@ const mapStateToProps = (state: ReduxStateType): MapStatePropsType => {
     }
 }
 
-let WithRedirect = WithAuthRedirect(UsersAPIComponent)
-export const UsersContainer = connect(mapStateToProps, {
+// let WithRedirect = WithAuthRedirect(UsersAPIComponent)
+// const WithUrlDataContainerComponent = withRouter(WithRedirect)
+// export const UsersContainer = connect(mapStateToProps, {
+//         follow,
+//         unFollow,
+//         setCurrentPage,
+//         setFollowingInProgress,
+//         getUsersThunkCreator,
+//         onPageChangeThunkCreator,
+//         followThunkCreator,
+//         unfollowThunkCreator
+//     }
+// )(WithUrlDataContainerComponent)
+
+// let WithRedirect = WithAuthRedirect(UsersAPIComponent)
+// const WithUrlDataContainerComponent = withRouter(WithRedirect)
+export const UsersContainer = compose<FC>(
+    connect(mapStateToProps, {
         follow,
         unFollow,
         setCurrentPage,
@@ -92,7 +109,9 @@ export const UsersContainer = connect(mapStateToProps, {
         onPageChangeThunkCreator,
         followThunkCreator,
         unfollowThunkCreator
-    }
-)(WithRedirect)
+    }),
+    WithAuthRedirect,
+    withRouter
+)(UsersAPIComponent)
 
 
