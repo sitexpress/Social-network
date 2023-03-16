@@ -46,13 +46,11 @@ const mapDispatchToProps = (dispatch: AppDispatch):MapDispatchToPropsType => ({
     }
 })
 
-// const HeaderContainer =  connect(mapStateToProps, mapDispatchToProps)(HeaderComp)
-// export default HeaderContainer
+export const HeaderContainer =  connect(mapStateToProps, mapDispatchToProps)(HeaderComp)
 
-
-export const HeaderContainer =  compose<FC>(
-    connect(mapStateToProps, mapDispatchToProps),
-    WithAuthRedirect,
-    withRouter
-) (HeaderComp)
+// export const HeaderContainer =  compose<FC>(
+//     connect(mapStateToProps, mapDispatchToProps),
+//     WithAuthRedirect,
+//     withRouter
+// ) (HeaderComp)
 

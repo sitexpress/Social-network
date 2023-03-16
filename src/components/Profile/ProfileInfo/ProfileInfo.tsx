@@ -1,8 +1,8 @@
 import s from "./ProfileInfo.module.css";
 import React from "react";
-import {ProfilePropsType, ProfileType} from "../ProfileInfoContainer/ProfileContainer";
+import {ProfileType} from "../ProfileInfoContainer/ProfileContainer";
 import {Preloader} from "../../../common/preloader/Preloader";
-// import {ProfileStatus} from "./ProfileStatus";
+import {ProfileStatus} from "./ProfileStatus";
 
 type PropsType = {
     profile: ProfileType
@@ -21,7 +21,7 @@ export const ProfileInfo = (props:PropsType) => {
             <div className={s.profileInfo__image__descr__block}>
                 <div className={s.profileInfo__ava}>
                     <img src={`${props.profile.photos.small}`} alt="Avatar"/>
-                    {/*<ProfileStatus status={"Hi"}/>*/}
+                    <ProfileStatus status={"Hi, this is my status"}/>
                 </div>
                 <div className={s.profileInfo__descr}>
                     <div>Name:{props.profile.fullName}</div>
