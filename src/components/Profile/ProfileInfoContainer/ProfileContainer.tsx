@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {connect} from "react-redux";
 import {AppDispatch, ReduxStateType} from "../../../Redux/redux-store";
-import {getProfileThunkCreator, setUserProfile} from "../../../Redux/profileReducer";
+import {getProfileTC, getStatusTC, setUserProfile, updateStatusTC} from "../../../Redux/profileReducer";
 import {Profile} from "../Profile";
 import {withRouter} from "../../../common/withRouter/withRouter";
 import {WithAuthRedirect} from "../../../hoc/withAuthRedirect";
@@ -32,8 +32,9 @@ export type ProfileType = {
     userId: number
     photos: PhotosType
 }
-
 export type TheAuth = boolean
+
+
 
 export class ProfileApiComponent extends React.Component<WithRouterPropsType> {
 
@@ -44,19 +45,29 @@ export class ProfileApiComponent extends React.Component<WithRouterPropsType> {
         }
 
         this.props.getProfile(userId)
+        this.props.getStatus(userId)
+        // this.props.updateStatus(status)
     }
     render() {
-        return  <Profile {...this.props} profile={this.props.profile}/>
+        return  <Profile
+            {...this.props}
+            profile={this.props.profile}
+            status={this.props.status}
+            updateStatus={this.props.updateStatus}
+        />
     }
 }
 
 type MapStateToPropsType = {
     profile: ProfileType
+    status: string
 }
 
 type MapDispatchToPropsType = {
     setUserProfile:(profile: ProfileType) => void
     getProfile: (userId:number) => void
+    getStatus: (userId:number) => void
+    updateStatus: (status:string) => void
 }
 
 
@@ -65,6 +76,7 @@ export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 
 let mapStateToProps = (state:ReduxStateType):MapStateToPropsType => ({
     profile: state.profilePage.profile,
+    status: state.profilePage.status,
 })
 
 let mapDispatchToProps = (dispatch:AppDispatch):MapDispatchToPropsType => ({
@@ -72,7 +84,13 @@ let mapDispatchToProps = (dispatch:AppDispatch):MapDispatchToPropsType => ({
         dispatch(setUserProfile(profile))
     },
     getProfile: (userId:number) => {
-        dispatch(getProfileThunkCreator(userId))
+        dispatch(getProfileTC(userId))
+    },
+    getStatus: (userId:number) => {
+        dispatch(getStatusTC(userId))
+    },
+    updateStatus: (status) => {
+        dispatch(updateStatusTC(status))
     }
 
 })

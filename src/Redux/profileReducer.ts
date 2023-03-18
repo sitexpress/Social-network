@@ -1,37 +1,12 @@
 import {v1} from "uuid";
 import {ContactsType, ProfileType} from "../components/Profile/ProfileInfoContainer/ProfileContainer";
 import {Dispatch} from "redux";
-import {authAPI, usersAPI} from "../api/api";
+import {authAPI, profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST'
 const CHANGE_TEXT = 'CHANGE-TEXT'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
-
-const initial:ProfilePageType = {
-        postData: [
-            {id: v1(), message: 'Hi', like: 1},
-            {id: v1(), message: 'How', like: 2},
-            {id: v1(), message: 'Are you here?', like: 2},
-            {id: v1(), message: 'Hiddd', like: 5},
-            {id: v1(), message: 'ddd', like: 4},
-            {id: v1(), message: 'cdcdsc', like: 3},
-            {id: v1(), message: 'dcad', like: 65},
-            {id: v1(), message: 'acad', like: 0},
-        ],
-        newPostData: '',
-        profile: {
-            aboutMe:'',
-            contacts:{} as ContactsType,
-            fullName:'',
-            lookingForAJob: false,
-            lookingForAJobDescription:'',
-            photos:{
-                large:'',
-                small:''
-            },
-            userId:0
-        }
-}
+const SET_STATUS = 'SET-STATUS'
 
 export type PostDataType = {
     id: string
@@ -43,6 +18,34 @@ export type ProfilePageType = {
     postData: PostDataType[]
     newPostData: string
     profile: ProfileType
+    status: string
+}
+
+const initial:ProfilePageType = {
+    postData: [
+        {id: v1(), message: 'Hi', like: 1},
+        {id: v1(), message: 'How', like: 2},
+        {id: v1(), message: 'Are you here?', like: 2},
+        {id: v1(), message: 'Hiddd', like: 5},
+        {id: v1(), message: 'ddd', like: 4},
+        {id: v1(), message: 'cdcdsc', like: 3},
+        {id: v1(), message: 'dcad', like: 65},
+        {id: v1(), message: 'acad', like: 0},
+    ],
+    newPostData: '',
+    profile: {
+        aboutMe:'',
+        contacts:{} as ContactsType,
+        fullName:'',
+        lookingForAJob: false,
+        lookingForAJobDescription:'',
+        photos:{
+            large:'',
+            small:''
+        },
+        userId:0,
+    },
+    status: ''
 }
 
 export const profileReducer = (state:ProfilePageType = initial, action:MainProfileActionType):ProfilePageType => {
@@ -53,8 +56,12 @@ export const profileReducer = (state:ProfilePageType = initial, action:MainProfi
         case CHANGE_TEXT:
             return {...state, newPostData: action.value}
         case SET_USER_PROFILE:
-            console.log('from reducer ',action.profile)
             return {...state, profile:action.profile}
+        case SET_STATUS:
+            return {
+                ...state,
+                    status: action.status
+            }
         default:
             return state
     }
@@ -65,8 +72,9 @@ export type MainProfileActionType =
     addProfilePostACType
     | newProfilePostDataACType
     | setUserProfileACType
+    | setStatusACType
 
-
+// AC
 export type addProfilePostACType = ReturnType<typeof addProfilePostAC>
 export const addProfilePostAC = (value: string) => {
     return {
@@ -87,15 +95,39 @@ export const setUserProfile= (profile: ProfileType) => ({
     profile
 } as const)
 
+export type setStatusACType = ReturnType<typeof setStatus>
+export const setStatus= (status: string) => ({
+    type: SET_STATUS,
+    status
+} as const)
 
 
-export const getProfileThunkCreator = (userId:number) => {
+// Thunk
+export const getProfileTC = (userId:number) => {
     return (dispatch:Dispatch<MainProfileActionType>) => {
         usersAPI.getProfile(userId)
-            .then(resp => {
-                console.log('from thunk ', resp.data)
-            dispatch(setUserProfile(resp.data))
+            .then(res => {
+            dispatch(setUserProfile(res.data))
         })
     }
+}
+
+export const getStatusTC = (userId:number) => (dispatch:Dispatch<MainProfileActionType>) => {
+        profileAPI.getStatus(userId)
+            .then(res => {
+                console.log('getStatus ', res)
+            dispatch(setStatus(res.data))
+        })
+}
+
+export const updateStatusTC = (status:string) => (dispatch:Dispatch<MainProfileActionType>) => {
+        profileAPI.updateStatus(status)
+            .then(res => {
+                console.log('setStatus ', res)
+
+                if (res.data.resultCode === 0) {
+                    dispatch(setStatus(status))
+                }
+        })
 }
 
