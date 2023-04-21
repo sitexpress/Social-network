@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from 'react';
 import {MyPosts} from "../MyPosts/MyPosts";
-import {addProfilePostAC, newProfilePostDataAC, ProfilePageType} from "../../../Redux/profileReducer";
+import {addProfilePostAC, ProfilePageType} from "../../../Redux/profileReducer";
 import {connect} from "react-redux";
 import {ReduxStateType} from "../../../Redux/redux-store";
 import {Dispatch} from "redux";
@@ -13,7 +13,7 @@ type mapStateToPropsType = {
 
 type mapDispatchToProps = {
     callBackOnAdd: (value:string) => void
-    callBackOnChange: (value:string) => void
+    // callBackOnChange: (value:string) => void
 }
 
 export type MapConnectPostType = mapStateToPropsType & mapDispatchToProps
@@ -31,9 +31,9 @@ const mapDispatchToProps = (dispatch: Dispatch):mapDispatchToProps => {
         callBackOnAdd: (value:string) => {
             dispatch(addProfilePostAC(value))
         },
-        callBackOnChange: (value:string) => {
-            dispatch(newProfilePostDataAC(value))
-        }
+        // callBackOnChange: (value:string) => {
+        //     dispatch(newProfilePostDataAC(value))
+        // }
     }
 }
 // callBackOnAdd, callBackOnChange

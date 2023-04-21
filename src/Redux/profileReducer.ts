@@ -4,7 +4,6 @@ import {Dispatch} from "redux";
 import {authAPI, profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST'
-const CHANGE_TEXT = 'CHANGE-TEXT'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_STATUS = 'SET-STATUS'
 
@@ -52,9 +51,7 @@ export const profileReducer = (state:ProfilePageType = initial, action:MainProfi
     switch (action.type) {
         case ADD_POST:
             const newPost = {id: v1(), message: action.value, like: 0}
-            return {...state, postData: [newPost, ...state.postData], newPostData:''}
-        case CHANGE_TEXT:
-            return {...state, newPostData: action.value}
+            return {...state, postData: [newPost, ...state.postData]}
         case SET_USER_PROFILE:
             return {...state, profile:action.profile}
         case SET_STATUS:
@@ -70,9 +67,9 @@ export const profileReducer = (state:ProfilePageType = initial, action:MainProfi
 
 export type MainProfileActionType =
     addProfilePostACType
-    | newProfilePostDataACType
     | setUserProfileACType
     | setStatusACType
+
 
 // AC
 export type addProfilePostACType = ReturnType<typeof addProfilePostAC>
@@ -82,12 +79,6 @@ export const addProfilePostAC = (value: string) => {
         value: value
     } as const
 }
-
-export type newProfilePostDataACType = ReturnType<typeof newProfilePostDataAC>
-export const newProfilePostDataAC = (value: string) => ({
-    type: CHANGE_TEXT,
-    value: value
-} as const)
 
 export type setUserProfileACType = ReturnType<typeof setUserProfile>
 export const setUserProfile= (profile: ProfileType) => ({

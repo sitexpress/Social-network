@@ -1,7 +1,6 @@
 import {v1} from "uuid";
 
 const ADD_MESSAGES = 'ADD-MESSAGES'
-const NEW_MESSAGE_VALUE = 'NEW-MESSAGE-VALUE'
 
 const initial:dialogsPageType = {
         dialogData: [
@@ -21,7 +20,6 @@ const initial:dialogsPageType = {
             {id: '6', message: 'ewdw'},
 
         ],
-        newMessageData: ''
 }
 
 export type DialogDataType = {
@@ -36,32 +34,24 @@ export type MessageDataType = {
 export type dialogsPageType = {
     dialogData: DialogDataType[]
     messageData: MessageDataType[]
-    newMessageData: string
 }
 
 export const messageReducer = (state:dialogsPageType = initial, action:MainMessagesActionType):dialogsPageType => {
     switch (action.type) {
         case ADD_MESSAGES:
-            let newMessage = {id: v1(), message: state.newMessageData}
-            return {...state, messageData: [...state.messageData, newMessage], newMessageData: ''}
-        case NEW_MESSAGE_VALUE:
-            return {...state, newMessageData: action.payload.newMessagesValue}
+            let newMessage = {id: v1(), message: action.newMessageData}
+            return {...state, messageData: [...state.messageData, newMessage]}
         default:
             return state
     }
 }
 
-export type MainMessagesActionType = addMessagesACType | newMessageDataACType
+export type MainMessagesActionType =
+    addMessagesACType
 
 export type addMessagesACType = ReturnType<typeof addMessagesAC>
-export const addMessagesAC = () => ({
-    type: ADD_MESSAGES,
+export const addMessagesAC = (newMessageData:string) => ({
+    type: ADD_MESSAGES, newMessageData
 } as const)
 
-export type newMessageDataACType = ReturnType<typeof newMessageDataAC>
-export const newMessageDataAC = (newMessagesValue: string) => ({
-    type: NEW_MESSAGE_VALUE,
-    payload: {
-        newMessagesValue
-    }
-} as const)
+

@@ -25,8 +25,8 @@ type MapStateToPropsType = {
     email: string
     login: string,
     isAuth: boolean
-
 }
+
 const mapStateToProps = (state: ReduxStateType): MapStateToPropsType => {
     return {
         id: state.auth.id,
