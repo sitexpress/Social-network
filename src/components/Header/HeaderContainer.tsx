@@ -3,7 +3,7 @@ import {Header} from "./Header";
 import {connect} from "react-redux";
 import {compose, Dispatch} from "redux";
 import {AppActionType, AppDispatch, ReduxStateType} from "../../Redux/redux-store";
-import {getLoginMeThunkCreator, setAuthUserDataACType} from "../../Redux/authReducer";
+import {getLoginMeThunkCreator, logoutThunkCreator, setAuthUserDataACType} from "../../Redux/authReducer";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 import {withRouter} from "../../common/withRouter/withRouter";
 
@@ -38,11 +38,15 @@ const mapStateToProps = (state: ReduxStateType): MapStateToPropsType => {
 
 type MapDispatchToPropsType = {
     getLogin: () => void
+    logout: () => void
 }
 
 const mapDispatchToProps = (dispatch: AppDispatch):MapDispatchToPropsType => ({
     getLogin: () => {
        dispatch(getLoginMeThunkCreator())
+    },
+    logout: () => {
+        dispatch(logoutThunkCreator())
     }
 })
 

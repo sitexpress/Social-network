@@ -8,6 +8,8 @@ type AuthType = {
     email: string
     login: string
     isAuth: boolean
+    getLogin: () => void
+    logout: () => void
 }
 
 export const Header = (props:AuthType) => {
@@ -17,11 +19,14 @@ export const Header = (props:AuthType) => {
             <h1 className={s.header__heading}>Social network</h1>
             <div className={s.login}>
                 {props.isAuth
-                    ? <div>
+                    ?
+                    <div>
                         <span>email:{props.login} <br/></span>
                         <span>id:{props.id}</span>
+                        <button onClick={props.logout}>Log out</button>
                     </div>
-                    : <NavLink to={"/login"}>Login</NavLink>
+                    :
+                    <NavLink to={"/login"}>Login</NavLink>
                 }
 
             </div>
