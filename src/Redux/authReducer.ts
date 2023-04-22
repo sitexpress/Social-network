@@ -3,6 +3,7 @@ import {authAPI} from "../api/api";
 import {connect} from "react-redux";
 import {ReduxStateType} from "./redux-store";
 import { ThunkAction } from "redux-thunk";
+import {stopSubmit} from "redux-form";
 
 
 export type AuthType = {
@@ -54,12 +55,18 @@ export const getLoginMeThunkCreator = () => (dispatch:Dispatch<AuthMainType>) =>
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, ReduxStateType, unknown, AnyAction>
 export const loginThunkCreator = (email:string, password:string, rememberMe:boolean):AppThunk => (dispatch) => {
+
+
     authAPI.login(email, password, rememberMe)
         .then(resp => {
         if (resp.data.resultCode === 0) {
             dispatch(getLoginMeThunkCreator())
             // let {id, email, login} = resp.data.data
             // dispatch(setAuthUserDataAC(id, email, login))
+        } else {
+            let message = resp.data.messages.length > 0 ? resp.data.messages[0] : "Some error"
+            dispatch(stopSubmit("login", {_error: message}))
+
         }
     })
 }

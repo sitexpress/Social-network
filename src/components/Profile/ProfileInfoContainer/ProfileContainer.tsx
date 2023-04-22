@@ -35,21 +35,21 @@ export type ProfileType = {
 export type TheAuth = boolean
 
 
-
 export class ProfileApiComponent extends React.Component<WithRouterPropsType> {
 
-    componentDidMount(){
+    componentDidMount() {
         let userId = this.props.params.userId
         if (!userId) {
-            userId = 15723
+            userId = +this.props.autorizedUserId
         }
 
         this.props.getProfile(userId)
         this.props.getStatus(userId)
         // this.props.updateStatus(status)
     }
+
     render() {
-        return  <Profile
+        return <Profile
             {...this.props}
             profile={this.props.profile}
             status={this.props.status}
@@ -61,32 +61,35 @@ export class ProfileApiComponent extends React.Component<WithRouterPropsType> {
 type MapStateToPropsType = {
     profile: ProfileType
     status: string
+    autorizedUserId: string
+    isAuth: boolean
 }
 
 type MapDispatchToPropsType = {
-    setUserProfile:(profile: ProfileType) => void
-    getProfile: (userId:number) => void
-    getStatus: (userId:number) => void
-    updateStatus: (status:string) => void
+    setUserProfile: (profile: ProfileType) => void
+    getProfile: (userId: number) => void
+    getStatus: (userId: number) => void
+    updateStatus: (status: string) => void
 }
-
 
 
 export type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 
-let mapStateToProps = (state:ReduxStateType):MapStateToPropsType => ({
+let mapStateToProps = (state: ReduxStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
+    autorizedUserId: state.auth.id,
+    isAuth: state.auth.isAuth
 })
 
-let mapDispatchToProps = (dispatch:AppDispatch):MapDispatchToPropsType => ({
+let mapDispatchToProps = (dispatch: AppDispatch): MapDispatchToPropsType => ({
     setUserProfile: (profile: ProfileType) => {
         dispatch(setUserProfile(profile))
     },
-    getProfile: (userId:number) => {
+    getProfile: (userId: number) => {
         dispatch(getProfileTC(userId))
     },
-    getStatus: (userId:number) => {
+    getStatus: (userId: number) => {
         dispatch(getStatusTC(userId))
     },
     updateStatus: (status) => {
@@ -97,7 +100,7 @@ let mapDispatchToProps = (dispatch:AppDispatch):MapDispatchToPropsType => ({
 
 type PathParamsType = {
     params: {
-        userId:number
+        userId: number
     }
 }
 type WithRouterPropsType = ProfilePropsType & PathParamsType & TheAuth

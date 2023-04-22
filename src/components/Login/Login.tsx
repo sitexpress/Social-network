@@ -2,6 +2,7 @@ import React from "react"
 import {Field, InjectedFormProps, reduxForm} from "redux-form"
 import { Input } from "../../common/FormsControls/FormsControls"
 import s from "./Login.module.css"
+import form from "../../common/FormsControls/FormsControls.module.css"
 import {maxLengthCreator, required} from "../../utils/validators/validators";
 import {connect} from "react-redux";
 import {loginThunkCreator} from "../../Redux/authReducer";
@@ -45,6 +46,12 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormDataType>> = (props) => {
 
                 />
             </div>
+            {props.error &&
+                <div className={form.forms_summary_error}>
+                    {props.error}
+                </div>
+            }
+
             <div>
                 <button>Login</button>
             </div>

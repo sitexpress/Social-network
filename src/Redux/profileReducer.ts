@@ -20,7 +20,7 @@ export type ProfilePageType = {
     status: string
 }
 
-const initial:ProfilePageType = {
+const initial: ProfilePageType = {
     postData: [
         {id: v1(), message: 'Hi', like: 1},
         {id: v1(), message: 'How', like: 2},
@@ -33,31 +33,31 @@ const initial:ProfilePageType = {
     ],
     newPostData: '',
     profile: {
-        aboutMe:'',
-        contacts:{} as ContactsType,
-        fullName:'',
+        aboutMe: '',
+        contacts: {} as ContactsType,
+        fullName: '',
         lookingForAJob: false,
-        lookingForAJobDescription:'',
-        photos:{
-            large:'',
-            small:''
+        lookingForAJobDescription: '',
+        photos: {
+            large: '',
+            small: ''
         },
-        userId:0,
+        userId: 0,
     },
     status: ''
 }
 
-export const profileReducer = (state:ProfilePageType = initial, action:MainProfileActionType):ProfilePageType => {
+export const profileReducer = (state: ProfilePageType = initial, action: MainProfileActionType): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
             const newPost = {id: v1(), message: action.value, like: 0}
             return {...state, postData: [newPost, ...state.postData]}
         case SET_USER_PROFILE:
-            return {...state, profile:action.profile}
+            return {...state, profile: action.profile}
         case SET_STATUS:
             return {
                 ...state,
-                    status: action.status
+                status: action.status
             }
         default:
             return state
@@ -81,44 +81,44 @@ export const addProfilePostAC = (value: string) => {
 }
 
 export type setUserProfileACType = ReturnType<typeof setUserProfile>
-export const setUserProfile= (profile: ProfileType) => ({
+export const setUserProfile = (profile: ProfileType) => ({
     type: SET_USER_PROFILE,
     profile
 } as const)
 
 export type setStatusACType = ReturnType<typeof setStatus>
-export const setStatus= (status: string) => ({
+export const setStatus = (status: string) => ({
     type: SET_STATUS,
     status
 } as const)
 
 
 // Thunk
-export const getProfileTC = (userId:number) => {
-    return (dispatch:Dispatch<MainProfileActionType>) => {
+export const getProfileTC = (userId: number) => {
+    return (dispatch: Dispatch<MainProfileActionType>) => {
         usersAPI.getProfile(userId)
             .then(res => {
-            dispatch(setUserProfile(res.data))
-        })
+                dispatch(setUserProfile(res.data))
+            })
     }
 }
 
-export const getStatusTC = (userId:number) => (dispatch:Dispatch<MainProfileActionType>) => {
-        profileAPI.getStatus(userId)
-            .then(res => {
-                console.log('getStatus ', res)
+export const getStatusTC = (userId: number) => (dispatch: Dispatch<MainProfileActionType>) => {
+    profileAPI.getStatus(userId)
+        .then(res => {
+            console.log('getStatus ', res)
             dispatch(setStatus(res.data))
         })
 }
 
-export const updateStatusTC = (status:string) => (dispatch:Dispatch<MainProfileActionType>) => {
-        profileAPI.updateStatus(status)
-            .then(res => {
-                console.log('setStatus ', res)
+export const updateStatusTC = (status: string) => (dispatch: Dispatch<MainProfileActionType>) => {
+    profileAPI.updateStatus(status)
+        .then(res => {
+            console.log('setStatus ', res)
 
-                if (res.data.resultCode === 0) {
-                    dispatch(setStatus(status))
-                }
+            if (res.data.resultCode === 0) {
+                dispatch(setStatus(status))
+            }
         })
 }
 

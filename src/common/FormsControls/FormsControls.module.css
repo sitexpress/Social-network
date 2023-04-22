@@ -8,3 +8,10 @@
     color: red;
     outline:none;
 }
+
+.forms_summary_error {
+    border: 1px red solid;
+    color:red;
+    outline:none;
+    padding: 5px;
+}
