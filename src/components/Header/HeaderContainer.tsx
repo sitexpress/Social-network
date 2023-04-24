@@ -5,7 +5,6 @@ import {compose, Dispatch} from "redux";
 import {AppActionType, AppDispatch, ReduxStateType} from "../../Redux/redux-store";
 import {getLoginMeThunkCreator, logoutThunkCreator, setAuthUserDataACType} from "../../Redux/authReducer";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
-import {withRouter} from "../../common/withRouter/withRouter";
 
 type AuthType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -51,10 +50,3 @@ const mapDispatchToProps = (dispatch: AppDispatch):MapDispatchToPropsType => ({
 })
 
 export const HeaderContainer =  connect(mapStateToProps, mapDispatchToProps)(HeaderComp)
-
-// export const HeaderContainer =  compose<FC>(
-//     connect(mapStateToProps, mapDispatchToProps),
-//     WithAuthRedirect,
-//     withRouter
-// ) (HeaderComp)
-

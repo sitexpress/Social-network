@@ -6,10 +6,8 @@ import form from "../../common/FormsControls/FormsControls.module.css"
 import {maxLengthCreator, required} from "../../utils/validators/validators";
 import {connect} from "react-redux";
 import {loginThunkCreator} from "../../Redux/authReducer";
-import {Navigate} from "react-router-dom";
-import {Profile} from "../Profile/Profile";
+import {Redirect} from "react-router-dom";
 import {ReduxStateType} from "../../Redux/redux-store";
-import {Route, useNavigate} from 'react-router-dom';
 
 
 type LoginFormDataType = {
@@ -75,7 +73,7 @@ export const Login = (props:PropsType) => {
 
     console.log('Outside',props.isAuth)
     if (props.isAuth) {
-         return <Navigate to="/profile"/>
+         return <Redirect to="/profile"/>
     }
 
     return <div>

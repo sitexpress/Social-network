@@ -10,8 +10,9 @@ import {
 import {Users} from "./Users";
 import {Preloader} from "../../common/preloader/Preloader";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
-import {withRouter} from "../../common/withRouter/withRouter";
+// import {withRouter} from "../../common/withRouter/withRouter";
 import {compose} from "redux";
+import {withRouter} from "react-router-dom";
 
 //-------------------------------------------UserContainerAPI---------------------------
 export type UsersThisType = {
@@ -110,7 +111,6 @@ export const UsersContainer = compose<FC>(
         followThunkCreator,
         unfollowThunkCreator
     }),
-    WithAuthRedirect,
     withRouter
 )(UsersAPIComponent)
 

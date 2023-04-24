@@ -45,7 +45,7 @@ export const setAuthUserDataAC = (id:string, email:string, login:string, isAuth:
 
 
 export const getLoginMeThunkCreator = () => (dispatch:Dispatch<AuthMainType>) => {
-        authAPI.me().then(resp => {
+        return authAPI.me().then(resp => {
             if (resp.data.resultCode === 0) {
                 let {id, email, login, isAuth} = resp.data.data
                 dispatch(setAuthUserDataAC(id, email, login, true))
@@ -55,8 +55,6 @@ export const getLoginMeThunkCreator = () => (dispatch:Dispatch<AuthMainType>) =>
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, ReduxStateType, unknown, AnyAction>
 export const loginThunkCreator = (email:string, password:string, rememberMe:boolean):AppThunk => (dispatch) => {
-
-
     authAPI.login(email, password, rememberMe)
         .then(resp => {
         if (resp.data.resultCode === 0) {

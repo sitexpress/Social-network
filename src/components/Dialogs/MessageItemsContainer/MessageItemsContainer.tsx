@@ -5,7 +5,8 @@ import {ReduxStateType} from "../../../Redux/redux-store";
 import {connect} from "react-redux";
 import {compose, Dispatch} from "redux";
 import {WithAuthRedirect} from "../../../hoc/withAuthRedirect";
-import {withRouter} from "../../../common/withRouter/withRouter";
+import { withRouter } from 'react-router-dom';
+// import {withRouter} from "../../../common/withRouter/withRouter";
 
 type MapStatePropsType = {
     dialogsPage: dialogsPageType

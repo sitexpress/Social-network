@@ -3,7 +3,7 @@ import s from './Profile.module.css'
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostContainer} from "./MyPostContainer/MyPostContainer";
 import {ProfilePropsType, ProfileType, TheAuth} from "./ProfileInfoContainer/ProfileContainer";
-import {Navigate} from "react-router-dom";
+
 
 type PropsType = {
     profile: ProfileType

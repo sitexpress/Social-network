@@ -3,9 +3,10 @@ import {connect} from "react-redux";
 import {AppDispatch, ReduxStateType} from "../../../Redux/redux-store";
 import {getProfileTC, getStatusTC, setUserProfile, updateStatusTC} from "../../../Redux/profileReducer";
 import {Profile} from "../Profile";
-import {withRouter} from "../../../common/withRouter/withRouter";
+// import {withRouter} from "../../../common/withRouter/withRouter";
 import {WithAuthRedirect} from "../../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 
 export type ContactsType = {
     facebook: string | null
@@ -38,13 +39,16 @@ export type TheAuth = boolean
 export class ProfileApiComponent extends React.Component<WithRouterPropsType> {
 
     componentDidMount() {
-        let userId = this.props.params.userId
+        let userId = this.props.match.params.userId
         if (!userId) {
-            userId = +this.props.autorizedUserId
+            userId = this.props.autorizedUserId
+            if(!userId) {
+                this.props.history.push("/login")
+            }
         }
 
-        this.props.getProfile(userId)
-        this.props.getStatus(userId)
+        this.props.getProfile(+userId)
+        this.props.getStatus(+userId)
         // this.props.updateStatus(status)
     }
 
@@ -99,11 +103,10 @@ let mapDispatchToProps = (dispatch: AppDispatch): MapDispatchToPropsType => ({
 })
 
 type PathParamsType = {
-    params: {
-        userId: number
-    }
+    userId: string
 }
-type WithRouterPropsType = ProfilePropsType & PathParamsType & TheAuth
+
+type WithRouterPropsType = ProfilePropsType & RouteComponentProps<PathParamsType> & TheAuth
 // let AuthRedirectComponent = WithAuthRedirect(ProfileApiComponent)
 // const WithUrlDataContainerComponent = withRouter(AuthRedirectComponent)
 // export const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(WithUrlDataContainerComponent)

@@ -2,7 +2,7 @@ import React, {ChangeEvent} from 'react'
 import {MapConnectMessageType} from "../MessageItemsContainer/MessageItemsContainer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import s from "../../Login/Login.module.css";
-import { Navigate } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import {Textarea} from "../../../common/FormsControls/FormsControls";
 import {maxLengthCreator, required} from "../../../utils/validators/validators";
 
@@ -15,7 +15,7 @@ export const MessageItems = (props:MapConnectMessageType) => {
     }
 
 
-    if (props.isAuth) return <Navigate to={"/login"}/>
+    if (props.isAuth) return <Redirect to={"/login"}/>
 
     return  <div>
                 <div>
