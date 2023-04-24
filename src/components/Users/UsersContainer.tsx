@@ -13,6 +13,14 @@ import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 // import {withRouter} from "../../common/withRouter/withRouter";
 import {compose} from "redux";
 import {withRouter} from "react-router-dom";
+import {
+    getCurrentPage,
+    getIsFetching,
+    getIsFollowingInProgress,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from "../../Redux/users-selectors";
 
 //-------------------------------------------UserContainerAPI---------------------------
 export type UsersThisType = {
@@ -75,12 +83,12 @@ type MapStatePropsType = {
 }
 const mapStateToProps = (state: ReduxStateType): MapStatePropsType => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        isFollowingInProgress: state.usersPage.isFollowingInProgress
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        isFollowingInProgress: getIsFollowingInProgress(state)
     }
 }
 
