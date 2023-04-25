@@ -19,7 +19,7 @@ import {
     getIsFollowingInProgress,
     getPageSize,
     getTotalUsersCount,
-    getUsers
+    getUsersSuperReselect
 } from "../../Redux/users-selectors";
 
 //-------------------------------------------UserContainerAPI---------------------------
@@ -83,7 +83,7 @@ type MapStatePropsType = {
 }
 const mapStateToProps = (state: ReduxStateType): MapStatePropsType => {
     return {
-        users: getUsers(state),
+        users: getUsersSuperReselect(state),
         pageSize: getPageSize(state),
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
